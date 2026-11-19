@@ -1,0 +1,1010 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex"><style>:root{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style><script src="/ippon/nj-db.js"></script></head><body><title>NIJIRI 一本</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+<style>
+/* 届いて、飲む前は夜の瓶の色。飲んでからは白い間で、読みやすく。朱は一色、影なし */
+:root{
+  --night:#101712; --night-2:#18211b; --on-night:#f3f1ea; --on-night-soft:#b9bfb5; --night-line:#2c3a30;
+  --ground:#fbfbf8; --ink:#16201a; --ink-soft:#46504a; --ink-faint:#8d958f; --line:#dfe2dc;
+  --shu:#b3362a; --shu-deep:#8e2a20; --on-shu:#fff;
+  --outside:#0b0f0c; --glow:#e9e4d2; --door:#2b2a24; --lattice:#3a382f;
+  --f-num:"Shippori Mincho B1","Hiragino Mincho ProN",serif;
+  --f-text:"Zen Kaku Gothic New","Hiragino Sans",sans-serif;
+  --ease:cubic-bezier(.12,.9,.18,1);
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{background:var(--ground)}
+body{margin:0;color:var(--ink);font-family:var(--f-text);font-size:16px;line-height:1.85;letter-spacing:-.01em;-webkit-font-smoothing:antialiased;font-feature-settings:"palt" 1;overflow-x:clip}
+p{margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--shu);outline-offset:3px}
+.in{max-width:460px;margin:0 auto;padding-left:max(22px,env(safe-area-inset-left,0px));padding-right:max(22px,env(safe-area-inset-right,0px))}
+h2{font-weight:700;font-size:30px;line-height:1.25;margin:0;letter-spacing:.02em;text-wrap:balance}
+.sub{margin-top:14px;color:var(--ink-soft);font-size:15px}
+
+/* 入口 */
+#gate{position:fixed;inset:0;z-index:20;background:var(--outside);display:grid;place-items:center;cursor:pointer;clip-path:inset(0);transition:clip-path 1.1s var(--ease),opacity .4s linear}
+#gate.through{clip-path:inset(50% 50% 50% 50%);opacity:0;pointer-events:none}
+.door{position:relative;width:88px;height:96px;overflow:hidden;background:var(--glow);transition:transform 1.3s var(--ease)}
+.door::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 100%,#fff 0,var(--glow) 45%,#b9b29a 100%)}
+.door .to{position:absolute;inset:0;z-index:2;background:var(--door);background-image:repeating-linear-gradient(90deg,transparent 0 21px,var(--lattice) 21px 22px),repeating-linear-gradient(0deg,transparent 0 23px,var(--lattice) 23px 24px);transition:transform 1.1s var(--ease)}
+#gate.open .to{transform:translateX(100%)}
+#gate.in .door{transform:scale(9)}
+.gate-word{position:absolute;bottom:calc(18% + env(safe-area-inset-bottom,0px));left:0;right:0;text-align:center;color:#cfcab8;font-size:15px;letter-spacing:.3em;transition:opacity .5s linear}
+#gate.in .gate-word{opacity:0}
+
+/* 1 飲む前 */
+.mae{background:var(--night);color:var(--on-night);padding-top:calc(48px + env(safe-area-inset-top,0px));padding-bottom:64px}
+.seal{width:52px;height:52px;display:block;transform-origin:50% 60%;transform:rotate(-2deg)}
+.seal.pre{opacity:0}
+.seal.stamp{animation:stamp .7s var(--ease) both}
+@keyframes stamp{0%{transform:scale(1.5) rotate(-6deg);opacity:0}60%{opacity:1}100%{transform:scale(1) rotate(-2deg);opacity:1}}
+.no{margin-top:30px;font-family:var(--f-num);font-size:15px;letter-spacing:.12em;color:var(--on-night-soft);font-variant-numeric:tabular-nums}
+.name{font-weight:700;font-size:60px;line-height:1.05;margin:8px 0 0;letter-spacing:.02em}
+.name.pre{opacity:0}
+.name.up{animation:up 1.2s var(--ease) both}
+@keyframes up{from{opacity:0;transform:translateY(26px);clip-path:inset(0 0 100% 0)}to{opacity:1;transform:none;clip-path:inset(0 0 0 0)}}
+.origin{margin-top:14px;font-size:15px;color:var(--on-night-soft)}
+.uri{margin-top:42px;font-size:22px;font-weight:700;line-height:1.55}
+.eng{margin-top:8px;font-size:13px;color:var(--on-night-soft);letter-spacing:.02em}
+.kazu{margin:38px 0 0;display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--night-line)}
+.kazu div{padding:16px 8px 0 0;min-width:0}
+.kazu b{display:block;font-family:var(--f-num);font-size:38px;font-weight:700;line-height:1.1;font-variant-numeric:tabular-nums;color:var(--on-night)}
+.kazu b small{font-size:15px;margin-left:2px}
+.kazu span{display:block;margin-top:6px;font-size:13px;color:var(--on-night-soft);line-height:1.5}
+.denrai{margin-top:76px}
+.denrai .kicker{font-size:19px;font-weight:700;color:var(--on-night)}
+.nin{display:flex;flex-wrap:wrap;align-items:flex-end;column-gap:10px;margin-top:6px;line-height:1}
+.nin .lead-in{flex-basis:100%;font-size:18px;font-weight:700;margin:22px 0 6px}
+.nin .k{font-family:var(--f-num);font-size:120px;font-variant-numeric:lining-nums;font-weight:700;color:var(--shu);letter-spacing:-.04em;margin-bottom:-8px}
+.nin .s{font-size:18px;font-weight:700;padding-bottom:12px}
+.yurai{margin-top:18px;font-size:15px;color:#d3d8cf;line-height:1.85;letter-spacing:-.01em}
+.yurai rt{font-size:8px;color:var(--on-night-soft)}
+.ima{margin-top:20px;font-size:19px;font-weight:500;line-height:1.8}
+.nomikata{margin:64px 0 0;padding:0;list-style:none;border-top:1px solid var(--night-line)}
+.nomikata li{display:grid;grid-template-columns:2.2em 1fr;padding:16px 0;border-bottom:1px solid var(--night-line)}
+.nomikata .n{font-family:var(--f-num);font-size:22px;color:var(--shu);line-height:1.3}
+.nomikata b{display:block;font-size:18px;line-height:1.4}
+.nomikata span{font-size:14px;color:var(--on-night-soft)}
+.toi{margin-top:64px;font-size:24px;font-weight:700;line-height:1.6}
+.toi-sub{margin-top:10px;font-size:15px;color:var(--on-night-soft)}
+.nonda{margin-top:30px;display:block;width:100%;border:0;border-radius:6px;background:var(--shu);color:var(--on-shu);font-size:18px;font-weight:700;letter-spacing:.08em;padding:18px 20px;cursor:pointer;box-shadow:0 5px 0 var(--shu-deep);transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
+.nonda:active{transform:translateY(5px);box-shadow:0 0 0 var(--shu-deep)}
+
+/* 2 答え合わせ */
+.awase{padding-top:72px}
+.erabu{margin-top:26px;border-top:1px solid var(--ink)}
+.erabu label{position:relative;display:block;padding:15px 14px;border-bottom:1px solid var(--line);font-size:18px;font-weight:500;cursor:pointer}
+.erabu input{position:absolute;opacity:0;pointer-events:none}
+.erabu label:has(input:focus-visible){outline:2px solid var(--shu);outline-offset:-2px}
+.erabu input:checked{border:6px solid var(--shu)}
+.erabu label:has(input:checked){color:var(--shu)}
+.mae .erabu{border-top-color:var(--night-line)}
+.mae .erabu label{border-bottom-color:var(--night-line);color:var(--on-night);transition:background .3s var(--ease),color .3s var(--ease)}
+.mae .erabu label:active{background:var(--night-2)}
+.mae .erabu label:has(input:checked){background:var(--shu);color:var(--on-shu)}
+.mae .field label{color:var(--on-night-soft)}
+.mae .field input{color:var(--on-night);border-bottom-color:var(--night-line)}
+.mae .msg{color:#e88a7f}
+.nonda[disabled]{opacity:.35;box-shadow:none;cursor:default}
+.field{display:grid;gap:4px;min-width:0;margin-top:22px}
+.field label{font-size:13px;color:var(--ink-soft)}
+.field input,.field textarea,.field select{width:100%;border:0;border-bottom:1.5px solid var(--ink-faint);background:transparent;padding:10px 0;font-size:17px;color:var(--ink);border-radius:0;-webkit-appearance:none;appearance:none;min-height:46px}
+.field textarea{resize:vertical;line-height:1.8;min-height:110px}
+.field input:focus,.field textarea:focus,.field select:focus{outline:none;border-bottom-color:var(--shu)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}.two>*{min-width:0}
+.three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}.three>*{min-width:0}
+.oshi{margin-top:26px;border:0;border-radius:6px;background:var(--ink);color:var(--ground);font-size:17px;font-weight:700;letter-spacing:.06em;padding:16px 26px;cursor:pointer;box-shadow:0 5px 0 #000;transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
+.oshi:active{transform:translateY(5px);box-shadow:0 0 0 #000}
+.oshi[disabled]{background:var(--ink-faint);box-shadow:0 5px 0 var(--ink-soft);cursor:default}
+.textbtn{border:0;background:none;border-bottom:1px solid var(--ink-faint);padding:4px 0;font-size:14px;color:var(--ink-soft);cursor:pointer}
+.msg{margin-top:10px;font-size:14px;color:var(--shu);min-height:1.4em}
+.ans{margin-top:44px}
+.ans.show{animation:rise .9s var(--ease) both}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.chashi-ans{font-size:15px;color:var(--ink-soft)}
+.chashi-w{margin-top:6px;font-weight:700;font-size:40px;line-height:1.2}
+.chashi-w em{font-style:normal;color:var(--shu);display:inline-block;transform-origin:30% 60%}
+.ans.show .chashi-w em{animation:oshi .8s var(--ease) both}
+@keyframes oshi{0%{transform:scale(1.6) rotate(-4deg);opacity:0}55%{opacity:1}100%{transform:scale(1) rotate(0);opacity:1}}
+.chashi-p{margin-top:16px;font-size:17px;line-height:2}
+.chashi-cite{margin-top:8px;font-size:13px;color:var(--ink-soft)}
+.douji{margin-top:22px;font-size:17px;font-weight:700}
+.minna{margin-top:36px}
+.minna h3{font-size:15px;font-weight:500;color:var(--ink-soft);margin:0}
+.bar{display:grid;grid-template-columns:7em 1fr 3em;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:16px}
+.bar i{display:block;height:8px;background:var(--line);border-radius:4px;overflow:hidden}
+.bar i b{display:block;height:100%;background:var(--ink)}
+.bar.mine i b{background:var(--shu)}
+.bar.mine{color:var(--shu);font-weight:700}
+.bar span{text-align:right;font-variant-numeric:tabular-nums}
+.chart{margin-top:30px;width:100%;height:auto;display:block;overflow:visible}
+.chart text{font-family:var(--f-text);font-size:11px;fill:var(--ink-soft)}
+.chart .ax{stroke:var(--line);stroke-width:1}
+.chart .me{fill:var(--ink)}
+.chart .me-l{fill:var(--ink);font-size:13px;font-weight:700}
+.chart .you{fill:none;stroke:var(--shu);stroke-width:2.5}
+.chart .you-l{fill:var(--shu);font-size:13px;font-weight:700}
+.chart-l{margin-top:4px;font-size:13px;color:var(--ink-soft);text-align:center}
+.mini.mouhitori{margin:34px 0 0}
+.minna-w{margin-top:10px;font-size:18px;line-height:1.8}
+.minna-w .mine{color:var(--shu);font-weight:700}
+
+/* 3 つながり */
+.tsunagari{margin-top:96px;padding-top:72px;border-top:1px solid var(--ink)}
+.in>.tsunagari:first-child{margin-top:0;border-top:0}
+.soukei{margin-top:26px;display:grid;grid-template-columns:repeat(2,1fr);gap:0 18px}
+.soukei div{padding:12px 0;border-top:1px solid var(--line)}
+.soukei b{display:block;font-family:var(--f-num);font-size:40px;font-weight:700;line-height:1.1;font-variant-numeric:tabular-nums}
+.soukei span{font-size:13px;color:var(--ink-soft)}
+.tree{position:relative;margin-top:40px}
+.tree svg{position:absolute;left:0;top:0;width:28px;height:100%;overflow:visible}
+.tree path{fill:none;stroke:var(--ink);stroke-width:1.4}
+.tree .side{stroke:var(--ink-faint);stroke-dasharray:2 4}
+.draw{stroke-dasharray:var(--len);stroke-dashoffset:var(--len);transition:stroke-dashoffset 1.6s var(--ease)}
+.drawn .draw{stroke-dashoffset:0}
+.hito{position:relative;padding:0 0 26px 44px}
+.hito .who{font-size:14px;color:var(--ink-soft)}
+.hito .kotoba{font-size:17px;line-height:1.7}
+.hito.you .who{color:var(--shu);font-weight:700}
+.hito.empty .kotoba{color:var(--ink-faint);font-size:15px}
+.hito.branch{padding-left:72px;padding-bottom:16px}
+.hito.branch .who{color:var(--ink-faint)}
+.hito.branch .kotoba{font-size:15px;color:var(--ink-soft)}
+.hito .re{margin-top:4px;font-size:14px;color:var(--shu)}
+.hito.other{margin-top:22px;padding:18px 0 10px;border-top:1px solid var(--line)}
+.hito.other .who{font-size:14px;font-weight:700;color:var(--ink-soft)}
+.hito.other~.hito.branch{padding-left:0}
+.fuu{margin-top:30px;width:100%;border-collapse:collapse;font-size:15px}
+.fuu th,.fuu td{text-align:left;padding:12px 6px 12px 0;border-bottom:1px solid var(--line);vertical-align:baseline}
+.fuu th{font-weight:500}
+.fuu td{color:var(--ink-soft);font-variant-numeric:tabular-nums}
+
+/* 4 一言 */
+.hitokoto{margin-top:96px;padding-top:72px;border-top:1px solid var(--ink)}
+.check{display:flex;gap:12px;align-items:flex-start;margin-top:22px;font-size:15px;line-height:1.6;cursor:pointer}
+.check input{appearance:none;-webkit-appearance:none;width:20px;height:20px;flex:none;margin:2px 0 0;border:1.5px solid var(--ink-soft);border-radius:3px;display:grid;place-items:center}
+.check input:checked{border-color:var(--shu);background:var(--shu)}
+.check input:checked::after{content:"";width:9px;height:5px;border:2px solid var(--on-shu);border-top:0;border-right:0;transform:rotate(-45deg) translate(1px,-1px)}
+.voices{margin-top:34px}
+.voice{padding:18px 0;border-top:1px solid var(--line)}
+.voice .who{font-size:13px;color:var(--ink-soft)}
+.voice .k{margin-top:4px;font-size:17px;line-height:1.85}
+.voice .re{margin-top:10px;padding-left:14px;font-size:15px;color:var(--ink-soft);line-height:1.8}
+.voice .re b{display:block;font-size:12px;color:var(--shu);font-weight:500}
+.done-note{margin-top:16px;font-size:15px;color:var(--ink-soft)}
+
+/* 5 次の一本 */
+.tsugi{margin-top:96px;padding-top:72px;border-top:1px solid var(--ink)}
+.jijitsu{margin:26px 0 0;display:grid;grid-template-columns:auto 1fr;border-top:1px solid var(--line)}
+.jijitsu dt,.jijitsu dd{margin:0;padding:12px 0;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+.jijitsu dt{font-size:14px;color:var(--ink-soft);white-space:nowrap;padding-right:22px}
+.jijitsu dd{font-size:16px;min-width:0}
+.jijitsu dd b{font-family:var(--f-num);font-size:22px}
+.shimekiri{margin-top:22px;font-size:18px;font-weight:700;line-height:1.7}
+.order{margin-top:10px}
+.line{display:flex;align-items:flex-end;gap:8px}.line input{flex:1;min-width:0}.tail{font-size:16px;padding-bottom:12px;white-space:nowrap}
+.how{margin-top:16px;font-size:13.5px;color:var(--ink-soft);line-height:1.85}
+.nedan{margin-top:18px;font-size:17px;font-weight:700}
+.hold{position:relative;display:grid;place-items:center;margin:36px auto 0;width:168px;height:168px;border:0;background:none;padding:0;cursor:pointer;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.hold svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+.hold .track{fill:none;stroke:var(--line);stroke-width:2}
+.hold .fill{fill:none;stroke:var(--shu);stroke-width:4}
+.hold .core{width:110px;height:110px;border-radius:50%;background:var(--shu);color:var(--on-shu);display:grid;place-items:center;font-size:16px;font-weight:700;line-height:1.45;text-align:center;transition:transform .6s var(--ease)}
+.hold.pressing .core{transform:scale(.9)}
+.hold.burst .core{animation:burst .6s var(--ease)}
+@keyframes burst{0%{transform:scale(.86)}50%{transform:scale(1.08)}100%{transform:scale(1)}}
+.hold.owari{cursor:default}.hold.owari .core{background:var(--ground);color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink)}
+.hint{text-align:center;font-size:14px;color:var(--ink-soft);margin-top:14px;min-height:1.5em}
+.uketa{margin-top:36px;font-size:20px;font-weight:700;line-height:1.6}
+.uketa .seal{display:block;width:44px;height:44px;margin-bottom:14px}
+.uketa span{display:block}
+.uketa b{color:var(--shu)}
+.mini{display:grid;place-items:center;margin:30px auto 0;width:96px;height:96px;border-radius:50%;border:2px solid var(--shu);background:transparent;color:var(--shu);font-size:14px;font-weight:700;line-height:1.45;cursor:pointer;transition:transform .3s var(--ease)}
+.mini:active{transform:scale(.9)}
+#more{margin-top:40px}
+.again{display:block;margin:72px auto 0}
+
+/* 茶師だけ */
+.adm{margin-top:80px;padding-top:28px;border-top:1px solid var(--line)}
+.adm+.adm{margin-top:48px}
+.adm h3,.hon h3{font-size:22px;font-weight:700;margin:0}
+.lead{margin-top:10px;color:var(--ink-soft);font-size:14px}
+.adm form{display:grid;gap:4px;margin-top:10px}
+.sirusu{justify-self:start;margin-top:18px;border:0;border-radius:4px;background:var(--ink);color:var(--ground);padding:12px 22px;font-weight:700;cursor:pointer}
+.kpi{margin-top:24px;display:grid;grid-template-columns:auto 1fr;column-gap:18px}
+.kpi dt,.kpi dd{margin:0;padding:12px 0;border-top:1px solid var(--line)}
+.kpi dt{font-family:var(--f-num);font-size:30px;font-weight:700;line-height:1.2;font-variant-numeric:tabular-nums;text-align:right;min-width:2ch}
+.kpi dd{font-size:14px;align-self:center}
+.kpi .key{color:var(--shu)}
+.tbl{margin-top:18px;overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px}
+td,th{padding:10px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font-weight:500;color:var(--ink-soft);font-size:12px}
+code{overflow-wrap:anywhere;font-size:12px}
+.pill{font-size:12px;color:var(--ink-soft)}
+.list{margin-top:30px}
+.list a{display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--line);color:inherit;text-decoration:none}
+.ztree{margin-top:24px;width:100%;height:auto;display:block;overflow:visible}
+.ztree path{fill:none;stroke:var(--ink-faint);stroke-width:1.2}
+.ztree circle{fill:var(--ink)}
+.ztree text{fill:var(--ink-soft);font-size:11px;font-family:var(--f-text)}
+.hon{padding-top:56px}
+.q{font-weight:700;font-size:36px;line-height:1.2;margin-top:36px}
+.re-f{display:flex;gap:10px;align-items:flex-end;margin-top:8px}.re-f input{flex:1;min-width:0;border:0;border-bottom:1px solid var(--ink-faint);background:none;padding:8px 0;font-size:15px}
+footer{margin-top:96px;padding-bottom:calc(72px + env(safe-area-inset-bottom,0px))}
+footer nav a{color:var(--ink-soft);font-size:14px}
+@media (max-width:370px){.name{font-size:50px}.nin .k{font-size:100px}.kazu b{font-size:32px}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}#gate{display:none}.seal.pre{opacity:1}}
+
+/* ================================================================
+   11/19 POL STUDIO のもっこりの作りを深緑で
+   飲む前の帯は、POL のワイン色の帯を深緑に置き換えた面。押す物だけが膨らむ
+   白い地の押す物は白い布の膨らみに深緑の字。長押しの丸だけ深緑の膨らみ。朱は印と日付だけ
+   ================================================================ */
+:root{
+  --seal:#b3362a; --shu:#2c5a3f; --shu-deep:#1d3d2a; --green:#2c5a3f;
+  --night:#1f3a2b; --night-2:#2a4a37; --night-line:rgba(255,255,255,.14); --on-night-soft:#c9d6cc;
+  --nkey:radial-gradient(130% 120% at 50% 0%,#3f6650 0%,#2c4d3a 55%,#223d2e 100%);
+  --nkey-sh:inset 0 1px 1px rgba(255,255,255,.24),inset 0 -5px 10px rgba(4,20,10,.4),0 2px 2px rgba(6,22,12,.35),0 12px 20px -10px rgba(4,18,10,.7);
+  --nkey-in:inset 0 4px 9px rgba(4,18,10,.55),inset 0 -1px 1px rgba(255,255,255,.1);
+  --gkey:radial-gradient(130% 120% at 50% 0%,#5a9172 0%,#336a4a 45%,#22472f 100%);
+  --gkey-sh:inset 0 2px 2px rgba(255,255,255,.35),inset 0 -6px 12px rgba(8,30,16,.42),0 2px 3px rgba(20,56,34,.2),0 16px 26px -12px rgba(20,56,34,.6);
+  --gkey-in:inset 0 5px 11px rgba(6,26,14,.5),inset 0 -1px 1px rgba(255,255,255,.2),0 1px 2px rgba(20,56,34,.2);
+  --pillow:radial-gradient(ellipse 70% 55% at 50% 30%,#fff 0%,rgba(255,255,255,0) 100%),radial-gradient(ellipse 110% 130% at 50% 0%,#fff 0%,#fff 38%,#eff2ef 62%,#dfe5e0 84%,#d4dbd5 100%);
+  --pillow-sh:inset 0 -14px 20px -10px rgba(40,64,50,.22),inset 0 12px 14px -10px #fff,0 2px 3px rgba(30,52,40,.06),0 12px 22px -10px rgba(30,52,40,.2),0 28px 44px -24px rgba(30,52,40,.24);
+  --dent:radial-gradient(ellipse 90% 80% at 50% 58%,#f8faf8 0%,#eff2ef 60%,#e5eae6 100%);
+  --dent-sh:inset 0 5px 12px rgba(30,52,40,.18),inset 0 -2px 4px rgba(255,255,255,.95),0 1px 0 #fff;
+  --press:160ms;
+}
+.mae{background:linear-gradient(180deg,#2a4a37 0%,#1f3a2b 45%,#183024 100%)}
+.nin .k{color:#f3f1ea}
+.nomikata .n{color:var(--on-night-soft)}
+/* 選ぶ言葉：線の一覧をやめ、深緑の帯の上に膨らんだキーを2列で */
+.mae .erabu{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;border-top:0;margin-top:24px}
+.mae .erabu label{display:grid;place-items:center;min-height:56px;padding:10px;border:0;border-radius:18px;background:var(--nkey);box-shadow:var(--nkey-sh);color:var(--on-night);font-size:17px;transition:box-shadow var(--press) var(--ease),transform var(--press) var(--ease),background .3s var(--ease),color .3s var(--ease)}
+.mae .erabu label:active{background:var(--nkey);box-shadow:var(--nkey-in);transform:scale(.97)}
+.mae .erabu label:has(input:checked){background:var(--pillow);box-shadow:var(--pillow-sh);color:var(--green);font-weight:700}
+.mae .erabu label:has(input:focus-visible){outline:2px solid var(--on-night);outline-offset:2px}
+/* 主の押す物：白い布の大きな枕に深緑の字。押すとへこむ */
+.nonda{border-radius:999px;background:var(--pillow);box-shadow:var(--pillow-sh);color:var(--green);letter-spacing:.12em;padding:19px 20px;transition:box-shadow var(--press) var(--ease),transform var(--press) var(--ease)}
+.nonda:active{background:var(--dent);box-shadow:var(--dent-sh);transform:scale(.985)}
+.nonda[disabled]{opacity:.45;box-shadow:var(--pillow-sh)}
+.hitokoto .nonda{margin-top:30px}
+/* 長押しの丸：深緑の膨らみ。押している間はへこむ */
+.hold .core{width:118px;height:118px;background:var(--gkey);box-shadow:var(--gkey-sh);color:#fff;transition:box-shadow var(--press) var(--ease),transform .5s var(--ease)}
+.hold.pressing .core{box-shadow:var(--gkey-in);transform:scale(.92)}
+.hold .fill{stroke:var(--green)}
+.hold.owari .core{background:var(--dent);box-shadow:var(--dent-sh);color:var(--green)}
+/* 小さな丸：白い布の膨らみ */
+.mini{width:104px;height:104px;border:0;background:var(--pillow);box-shadow:var(--pillow-sh);color:var(--green);transition:box-shadow var(--press) var(--ease),transform var(--press) var(--ease)}
+.mini:active{background:var(--dent);box-shadow:var(--dent-sh);transform:scale(.97)}
+.uketa b{color:var(--seal)}
+.chashi-w em{color:var(--green)}
+
+/* ================================================================
+   11/19 POL STUDIO の仕上げ（ニューモーフィズム。Plyuto「Skeuomorph Mobile Banking」の文法）を深緑で
+   地はごく薄い緑がかった灰。押す物は地と同じ色で、左上に白い光、右下に地を暗くした影の2色
+   盛り上がり＝外に2色、へこみ＝内に2色。色は文字の深緑だけ。朱は印だけ
+   ================================================================ */
+:root{
+  --neu:#E9EEEA; --neu-hi:#FFFFFF; --neu-lo:#C3CEC6;
+  --up:-7px -7px 14px var(--neu-hi),7px 7px 14px var(--neu-lo);
+  --up-s:-5px -5px 10px var(--neu-hi),5px 5px 10px var(--neu-lo);
+  --up-l:-10px -10px 22px var(--neu-hi),10px 10px 22px var(--neu-lo);
+  --down:inset 5px 5px 10px var(--neu-lo),inset -5px -5px 10px var(--neu-hi);
+  --down-s:inset 3px 3px 7px var(--neu-lo),inset -3px -3px 7px var(--neu-hi);
+  --ground:var(--neu); --line:#D2DBD4; --ink:#17231C; --ink-soft:#4E5A52;
+  --on-night:var(--ink); --on-night-soft:var(--ink-soft); --night-line:#D2DBD4;
+}
+html,body{background:var(--neu)}
+.mae{background:var(--neu);color:var(--ink)}
+/* 札：手に持ったカード。表面に光が流れ、印は紙に型押し */
+.fuda{position:relative;overflow:hidden;border-radius:30px;padding:26px 24px 28px;background:linear-gradient(150deg,#F5F8F5 0%,#E3E9E4 100%);
+  box-shadow:-14px -14px 30px var(--neu-hi),16px 18px 34px var(--neu-lo),inset 0 1px 0 rgba(255,255,255,.9);animation:fuda 1s var(--ease) both}
+@keyframes fuda{from{transform:perspective(900px) rotateX(16deg) translateY(26px);opacity:0}}
+.fuda-hi{position:absolute;inset:0;pointer-events:none;mix-blend-mode:soft-light;background:radial-gradient(120% 70% at 30% 18%,rgba(255,255,255,.95) 0%,rgba(255,255,255,0) 45%),linear-gradient(115deg,transparent 30%,rgba(190,214,198,.35) 48%,rgba(214,226,206,.35) 56%,transparent 72%)}
+.fuda .seal{width:46px;height:46px}
+.fuda .no{margin-top:22px;color:var(--ink-soft)}
+.fuda .name{color:var(--ink);text-shadow:1px 1px 0 rgba(255,255,255,.9),-1px -1px 0 rgba(90,110,96,.18)}
+.fuda .origin{color:var(--ink-soft)}
+.fuda .uri{margin-top:28px;font-size:19px}
+.kazu{border-top:0}
+.denrai{margin-top:64px}
+.denrai .kicker{color:var(--ink)}
+.yurai{color:var(--ink-soft)}
+.nin .k{color:var(--green);text-shadow:2px 2px 0 rgba(255,255,255,.9),-1px -1px 0 rgba(90,110,96,.2)}
+.nomikata{border-top:0;display:grid;gap:14px}
+.nomikata li{border-bottom:0;padding:16px 18px;border-radius:20px;box-shadow:var(--down-s)}
+.nomikata .n{color:var(--green)}
+.toi-sub{color:var(--ink-soft)}
+/* 選ぶ言葉：地と同じ色のキー。選んだ物はへこんで、字だけ深緑 */
+.mae .erabu label{background:var(--neu);box-shadow:var(--up-s);color:var(--ink);border-radius:16px}
+.mae .erabu label:active{background:var(--neu);box-shadow:var(--down-s);transform:scale(.98)}
+.mae .erabu label:has(input:checked){background:var(--neu);box-shadow:var(--down);color:var(--green);font-weight:700}
+.mae .erabu label:has(input:focus-visible){outline:2px solid var(--green)}
+/* 書く欄：板に押し込んだ溝 */
+.mae .field input,.hitokoto .field input,.hitokoto .field textarea,.tsugi .field input{border:0;border-radius:14px;padding:12px 16px;background:var(--neu);box-shadow:var(--down-s);color:var(--ink)}
+.mae .field input:focus,.hitokoto .field input:focus,.hitokoto .field textarea:focus,.tsugi .field input:focus{box-shadow:var(--down),0 0 0 2px rgba(44,90,63,.35)}
+.tsugi .line{align-items:center}.tsugi .tail{padding-bottom:0}
+.check input{border:0;border-radius:6px;background:var(--neu);box-shadow:var(--down-s)}
+.check input:checked{background:var(--neu);box-shadow:var(--down)}
+.check input:checked::after{border-color:var(--green)}
+/* 主の押す物：地から盛り上がる大きな板、字だけ深緑。押すとへこむ */
+.nonda,.nonda:active{background:var(--neu)}
+.nonda{box-shadow:var(--up-l);color:var(--green)}
+.nonda:active{box-shadow:var(--down)}
+.nonda[disabled]{opacity:.5;box-shadow:var(--up-s)}
+/* 長押し：溝の中で丸が盛り上がる。押している間は丸が沈み、溝のふちに深緑が満ちる */
+.hold{border-radius:50%;box-shadow:var(--down)}
+.hold .track{stroke:transparent}
+.hold .core{background:var(--neu);box-shadow:var(--up);color:var(--green)}
+.hold.pressing .core{box-shadow:var(--down);transform:scale(.94)}
+.hold.owari .core{box-shadow:var(--down);color:var(--ink-soft)}
+.mini{background:var(--neu);box-shadow:var(--up);color:var(--green)}
+.mini:active{background:var(--neu);box-shadow:var(--down);transform:scale(.97)}
+/* 区切りは線をやめ、余白で */
+.tsunagari,.hitokoto,.tsugi{border-top:0}
+.tsunagari{margin-top:72px}.hitokoto,.tsugi{margin-top:56px}
+.hito.other{border-top:0}
+.chart .ax{stroke:#C9D3CC}
+.uketa b{color:var(--green)}
+
+/* 贈り方：選ぶ物は盛り上がったキー、選んだ物は沈む */
+.okurikata{margin-top:26px}
+.ok-h{margin-top:20px;font-size:14px;font-weight:700;color:var(--ink-soft)}
+.opts{margin-top:10px;display:grid;gap:12px}
+.opts-4{grid-template-columns:repeat(2,minmax(0,1fr))}
+.opts label{position:relative;display:grid;gap:2px;padding:14px 16px;border-radius:16px;background:var(--neu);box-shadow:var(--up-s);cursor:pointer;transition:box-shadow var(--press) var(--ease),transform var(--press) var(--ease),color .3s var(--ease)}
+.opts-4 label{place-items:center;text-align:center}
+.opts input{position:absolute;opacity:0;pointer-events:none}
+.opts b{font-size:16px}
+.opts span{font-size:13px;color:var(--ink-soft)}
+.opts label:active{box-shadow:var(--down-s);transform:scale(.98)}
+.opts label:has(input:checked){box-shadow:var(--down);color:var(--green)}
+.opts label:has(input:focus-visible){outline:2px solid var(--green);outline-offset:2px}
+.tsugi .field textarea{border:0;border-radius:14px;padding:12px 16px;background:var(--neu);box-shadow:var(--down-s);min-height:76px}
+
+/* 11/19 夜 字と余白を通販の画面の寸法に（TENTIAL を手本に）。特大の字と、だだっ広い余白をやめる */
+.mae{padding-top:calc(20px + env(safe-area-inset-top,0px));padding-bottom:40px}
+.fuda{padding:22px 20px 22px;border-radius:24px}
+.fuda .no{margin-top:0;font-size:13px}
+.name{font-size:30px;line-height:1.25;margin-top:6px}
+.origin{margin-top:4px;font-size:14px}
+.fuda .uri{margin-top:16px;font-size:16px;line-height:1.7}
+.kazu{margin-top:22px}.kazu b{font-size:24px}
+.denrai{margin-top:36px}
+.denrai .kicker{font-size:17px}
+.yurai{margin-top:10px;font-size:14px;line-height:1.85}
+.ima{margin-top:14px;font-size:16px;line-height:1.75;font-weight:400}
+.nin{margin-top:18px;font-size:16px;font-weight:700;line-height:1.6}
+.nin b{font-family:var(--f-num);font-size:26px;color:var(--green);margin:0 2px}
+.nomikata{margin-top:28px;gap:10px}
+.nomikata li{padding:12px 16px}
+.nomikata b{font-size:16px}
+.nomikata .n{font-size:18px}
+.toi{margin-top:36px;font-size:19px;line-height:1.6}
+.toi-sub{margin-top:6px;font-size:14px}
+.mae .erabu{margin-top:16px;gap:10px}
+.mae .erabu label{min-height:48px;font-size:15px}
+.nonda{margin-top:20px;padding:15px 18px;font-size:16px}
+.mae .field{margin-top:14px}
+h2{font-size:22px;line-height:1.4}
+.sub{margin-top:6px;font-size:14px}
+.awase{padding-top:40px}
+.ans{margin-top:20px}
+.chashi-w{font-size:26px;margin-top:2px}
+.chashi-p{margin-top:10px;font-size:15px;line-height:1.9}
+.douji{margin-top:14px;font-size:15px}
+.chart{margin-top:18px}
+.minna{margin-top:22px}.minna-w{font-size:16px}
+.tsunagari{margin-top:48px;padding-top:0}
+.hitokoto,.tsugi{margin-top:44px;padding-top:0}
+.tree{margin-top:22px}
+.hito{padding-bottom:18px}.hito .kotoba{font-size:15px}
+.field{margin-top:14px}
+.field input,.field textarea{font-size:16px}
+.nedan{margin-top:14px;font-size:15px}
+.how{margin-top:10px;font-size:13px}
+.hold{margin-top:26px;width:148px;height:148px}
+.hold .core{width:100px;height:100px;font-size:14px}
+.hint{margin-top:10px;font-size:13px}
+.mini{width:84px;height:84px;font-size:13px;margin-top:20px}
+.uketa{margin-top:20px;font-size:17px}
+footer{margin-top:56px}
+/* 贈り方：一行のボタンから開く下の板 */
+.settei{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;margin-top:14px;padding:14px 16px;border:0;border-radius:14px;background:var(--neu);box-shadow:var(--up-s);font-size:14px;color:var(--ink-soft);cursor:pointer;text-align:left}
+.settei b{font-size:14px;color:var(--green);font-weight:700}
+.settei:active{box-shadow:var(--down-s)}
+.sheet{margin:auto auto 0;width:100%;max-width:460px;max-height:86vh;border:0;padding:0;border-radius:22px 22px 0 0;background:var(--neu);color:var(--ink);box-shadow:0 -12px 30px -10px var(--neu-lo)}
+.sheet::backdrop{background:rgba(23,35,28,.32)}
+.sheet[open]{animation:sheet .45s var(--ease) both}
+@keyframes sheet{from{transform:translateY(40px);opacity:0}}
+.sheet-in{padding:18px 20px calc(22px + env(safe-area-inset-bottom,0px));overflow:auto;max-height:86vh}
+.sheet .ok-h{margin-top:12px}
+.sheet .opts label{padding:11px 14px}
+.sheet .field textarea{border:0;border-radius:14px;padding:12px 14px;background:var(--neu);box-shadow:var(--down-s);min-height:64px;width:100%}
+
+/* 11/19 夜 先生役の直し：膨らみは長押しの丸、味の8つ、「飲みました」「残す」だけ。ほかは平ら */
+:root{--ink-soft:#3E4A42}
+.fuda{background:none;box-shadow:none;border-radius:0;padding:0;overflow:visible;animation:none}
+.fuda-hi{display:none}
+.bin{display:block;width:84px;height:auto;margin:6px auto 22px;color:var(--ink);opacity:.85}
+.name{font-weight:600;letter-spacing:-.01em}
+.nomikata{gap:0;border-top:1px solid var(--line)}
+.nomikata li{box-shadow:none;border-radius:0;padding:12px 0;border-bottom:1px solid var(--line)}
+.nomikata span{font-size:14px}
+/* 書く所はへこむ */
+.mae .field input,.hitokoto .field input,.hitokoto .field textarea,.tsugi .field input,.tsugi .field textarea,.sheet .field textarea{box-shadow:var(--down)}
+/* 贈り方の行と、板の中の選ぶ物は平ら。選んだ物だけへこんで深緑 */
+.settei{box-shadow:none;background:none;border-top:1px solid var(--line);border-bottom:1px solid var(--line);border-radius:0;padding:14px 2px}
+.settei:active{box-shadow:none;background:rgba(195,206,198,.25)}
+.opts label,.sheet .opts label{box-shadow:none;background:none;border:1px solid var(--line);border-radius:14px}
+.opts label:active{box-shadow:var(--down-s)}
+.opts label:has(input:checked){border-color:transparent;box-shadow:var(--down);color:var(--green)}
+.opts label:has(input:checked) b{color:var(--green)}
+/* 小さな丸は平らな輪 */
+.mini{background:none;box-shadow:none;border:1.5px solid var(--green)}
+.mini:active{background:rgba(44,90,63,.08);box-shadow:none}
+/* 3 余白：見出しと本文は詰め、章と章の間だけ大きく空ける */
+.sub{margin-top:8px;font-size:16px;color:var(--ink-soft)}
+.yurai{font-size:16px;color:var(--ink-soft)}
+.toi-sub{font-size:15px}
+.chashi-p{font-size:16px}
+.mae{padding-bottom:56px}
+.awase{padding-top:80px}
+.tsunagari{margin-top:88px}
+.hitokoto{margin-top:56px}
+.tsugi{margin-top:88px}
+.in>.tsunagari:first-child{margin-top:80px}
+/* 8 下の帯：答え合わせのあとだけ。次の章が見えたら引っ込む */
+.obi{position:fixed;left:50%;bottom:calc(14px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:8;padding:13px 26px;border-radius:999px;background:var(--neu);box-shadow:var(--up);color:var(--green);font-size:15px;font-weight:700;text-decoration:none;letter-spacing:.06em;transition:transform .4s var(--ease),opacity .3s var(--ease)}
+.obi.hide{transform:translate(-50%,120%);opacity:0;pointer-events:none}
+footer{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+
+/* 11/19 先生役の細かい直し */
+.fuda{display:grid;grid-template-columns:132px minmax(0,1fr);grid-template-rows:1fr auto auto;column-gap:18px;align-items:end}
+.bin{grid-column:1;grid-row:1 / span 3;width:132px;margin:0;color:var(--green);opacity:1}
+.bin path{stroke-width:1.5}
+.fuda .no{grid-column:2;grid-row:1}
+.fuda .name{grid-column:2;grid-row:2}
+.fuda .origin{grid-column:2;grid-row:3;padding-bottom:6px}
+.fuda .uri,.fuda .kazu{grid-column:1 / -1}
+/* 1 太字は最後の一文だけ */
+.fuda .uri{font-size:18px;font-weight:400;margin-top:22px}
+.denrai .kicker{font-weight:400}
+/* 3 「様へ」「様の席より」は欄の下に小さく。欄の幅を揃える */
+.tsugi .line{display:grid;gap:4px}
+.tsugi .tail{justify-self:end;font-size:13px;color:var(--ink-soft);padding:0 4px}
+/* 4 下の帯は平らな深緑に白い字 */
+.obi{background:var(--green);box-shadow:none;color:#fff}
+</style>
+
+<div id="gate" aria-hidden="true" hidden>
+  <div class="door"><div class="to"></div></div>
+  <div class="gate-word">肩書きは、ここまで</div>
+</div>
+<main id="view"><div class="in"><section class="hon"><p class="lead">開いています</p></section></div></main>
+
+<script>
+{
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const KAN=["〇","一","二","三","四","五","六","七","八","九","十"];
+const kan=n=>n<=10?KAN[n]:n<20?"十"+(n%10?KAN[n%10]:""):KAN[Math.floor(n/10)]+"十"+(n%10?KAN[n%10]:"");
+/* ================================================================
+   文言と数字。直す時はここだけを書き換える
+   改行は \n。数字や日付が空（"" か null）の所は、画面に出さない
+   ================================================================ */
+const WORDS={
+  gate:"肩書きは、ここまで",
+  // 1 飲む前
+  uri:"店には並ばない一本です。\nこの印からだけ、手に入ります。",
+  eng:"Not sold in any shop. Only through this seal.",
+  kicker:"名物は、人の手を渡って名物になった",
+  ninMae:"あなたは、この一本の",
+  ninAto:"人目の受け手",
+  yurai:"初花肩衝という茶入は、信長、家康、秀吉、そしてまた家康へと渡りました。信長は手柄の褒美に茶道具を与え、誰の手を通ったかが、そのまま値打ちになりました。",
+  ruby:{"初花肩衝":"はつはなかたつき"},
+  ima:"この一本も、\n渡した人の一言を残しながら\n次の人へ渡っていきます。",
+  nomikata:[["よく冷やして","冷蔵庫でひと晩"],["小さな杯で","ひと口ずつ、舌の上で転がす"],["栓を開けたら","三日のうちに飲みきって"]],
+  toi:"ひと口飲んだら、\n何の味に似ていたか\n考えてみてください。",
+  toiSub:"答え合わせは、そのあとに。何人かで飲むなら、一人ずつ答えて見比べてください。",
+  nonda:"飲みました。答え合わせへ",
+  // 2 答え合わせ
+  awaseTitle:"答え合わせ",
+  awaseSub:"何に似ていましたか。近いものを一つ。",
+  hoka:"ほかの言葉で",
+  miru:"答えを見る",
+  mouhitori:"もう一人、答える",
+  chashiAns:"茶師の答え",
+  onaji:"茶師と同じ答えです。",
+  chigau:"茶師とは違う答え。それも、この一本の味です。",
+  minna:"この封を飲んだ人の答え",
+  kawaru:"味は季節と一本ごとに、少しずつ変わります。",
+  // 3 つながり
+  tsunagari:"この一本が\n渡ってきた道",
+  tsunagariSub:"誰から誰へ渡ったかを、この瓶が書き残しています。",
+  hajimari:"この封は、ここから始まります。",
+  fuu:"これまでの封",
+  // 4 一言
+  hitokoto:"一言を残す",
+  hitokotoSub:"飲んだ席のこと、渡した相手のこと。残してくれた方には、茶師から手書きの手紙をお送りします。",
+  tegami:"茶師からの手紙を受け取る",
+  // 5 次の一本
+  tsugi:"この印から、\n次の一本を",
+  tsugiSub:"贈る相手のお名前を書いて、印を押したままにしてください。茶師が詰めて、届けます。",
+  shimekiri:"{日}までに頼まれた分だけ、\n茶葉を確保します。",
+  oshiharai:"お支払いは、届ける前の日のお電話でご案内します。",
+  nedanNashi:"値段は、茶師がお電話でお伝えします。",
+  // 贈り方。包み方、添え状、添える一言。値段の分かる物は入れない
+  tsutsumi:[["wrap","包んで届ける","茶師が包んでお届けします"],["self","包みを添える","包みを同封し、ご自身で包めます"],["none","包まずに","添え状だけ付けます"]],
+  fuda:["お礼に","お祝いに","ご挨拶に","お名前だけ"],
+  soeru:"添える一言",
+  soeruSub:"茶師が添え状に手で書き写します",
+  nedanNashiNote:"値段の分かる物は入れません。送り状には、あなたのお名前を「様の席より」と書きます。",
+  todoke:"届け先は、前の日に茶師がお電話で伺います。芦屋、夙川、岡本、神戸、大阪市内は、その朝に詰めた一本を茶師が手渡しします。その外へは冷蔵便で。",
+};
+// 選べる味の言葉。pos は味の図の位置：うまみ 0〜5（右ほど濃い）、香り -2〜2（上ほど海、下ほど草）
+const AJI=[
+  {w:"昆布",pos:[4.4,0.7]},{w:"海苔",pos:[4.6,1.7]},{w:"白身の魚",pos:[4.3,0.3]},{w:"枝豆",pos:[2.2,-1.2]},
+  {w:"青い草",pos:[1.2,-1.8]},{w:"柑橘の皮",pos:[0.8,-0.4]},{w:"栗",pos:[2.6,-0.6]},{w:"花",pos:[0.6,0.2]}
+];
+// お茶ごと。キーは管理画面の「お茶の記号」
+const TEA={
+  "gyokuro-2026":{
+    hatake:"",                    // 例 "宇治白川 ひとつの茶園"
+    ooiDays:null,                 // 覆いをかけた日数
+    tsumiDays:null,               // 手で摘んだ日数
+    shikomi:null,                 // 今季の仕込み本数
+    otodoke:"",                   // お届けの始まり 例 "2026-12-01"
+    shimekiri:"",                 // 締切 例 "2026-11-30"
+    limit:null,                   // お一人の上限本数。空なら上限なし
+    price:12000,                  // 一本のお代。事業計画の玉露の値
+    pos:[4.3,1.6],                // この一本の味の位置
+    answer:"昆布",                // 茶師の答え。AJI の言葉から
+    chashi:"出汁なら、昆布です。利尻の厚い昆布を一晩、水に預けたようなとろりとした旨味。口当たりの厚みは、脂ののったサーモンを思わせます。鼻へ抜ける海苔の香りは、日を遮って育てた茶だけのものです。",
+    lots:[]                       // これまでの封 例 {name:"第一封 2026 口切り",count:240,note:"受付中"}
+  },
+  "sencha-2026":{pos:[2,-1.4],answer:"",chashi:"",lots:[]}
+};
+/* ================================================================ */
+const MASTER="堀川";
+const S={teas:{},tags:{},reviews:[],passes:[],orders:[],orderDocs:[],asking:false,site:{},owner:false,uid:null,db:null,ready:false,me:{},
+  gateDone:false,stamped:null,treeDone:false,kind:"gift",flash:"",fresh:-1,pressing:false};
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const route=()=>{const m=location.pathname.match(/\/t\/([a-z0-9]+)/i);return m?m[1].toLowerCase():(location.hash||"").slice(1).toLowerCase()};
+const yen=n=>n.toLocaleString("ja-JP")+"円";
+const md=t=>{const d=new Date(t);return `${d.getMonth()+1}月${d.getDate()}日`};
+const SEAL=`<rect x="2" y="2" width="60" height="60" rx="3" fill="var(--seal)"/><rect x="21" y="30" width="22" height="24" fill="var(--ground)"/><rect x="12" y="20" width="40" height="3" fill="var(--ground)"/>`;
+function store(k,v){try{if(v===undefined)return JSON.parse(localStorage.getItem(k)||"null");localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}}
+
+/* ---------- 伝来 ---------- */
+function chain(holder){const back={};S.passes.forEach(p=>{back[p.to]=back[p.to]||p});const c=[];let n=holder,g=0;
+  while(n&&g++<50){c.unshift(n);n=back[n]?.from}return c}
+// 茶師の手元のままの瓶をかざした人は、茶師の次の一人目
+function myChain(tg){const c=chain(tg.holder||MASTER);return !S.owner&&c[c.length-1]===MASTER?[...c,"\u0000you"]:c}
+const label=r=>[r.area,r.job].filter(Boolean).join("　");
+const said=r=>r.text||(r.taste?r.taste+"の味":"");
+function rows(tg,nth){
+  const c=myChain(tg),inC=new Set(c),used=new Set();const out=[];
+  const pool=S.reviews.filter(r=>r.tea===tg.tea&&r.text);
+  const rvOf=n=>{const r=pool.find(r=>r.holder===n&&!used.has(r));if(r)used.add(r);return r};
+  c.forEach((n,i)=>{const you=i===c.length-1;
+    if(you){const m=S.me.mine;
+      out.push({you:true,who:(m&&label(m)?label(m)+"　":"")+"あなた　"+nth+"人目",word:m?m.text:(S.me.answers||[]).length?S.me.answers[0]+"の味":"まだ一言はありません",empty:!m&&!(S.me.answers||[]).length});return}
+    const r=i===0?null:rvOf(n);
+    out.push({who:i===0?"茶師":(r&&label(r))||i+"人目",word:r?said(r):i===0?"詰めて、封をした":"まだ一言はありません",empty:!r&&i!==0});
+    const side=S.passes.filter(p=>p.from===n&&!inC.has(p.to)).map(p=>p.to);
+    let quiet=0;side.forEach(x=>{const r2=rvOf(x);if(r2)out.push({branch:true,who:label(r2)||"ほかの席",word:said(r2)});else quiet++});
+    if(quiet)out.push({branch:true,who:`ほかに${quiet}つの席へ`,word:""});
+  });
+  const rest=pool.filter(r=>r.text&&!used.has(r)&&!(S.me.mine&&r.at===S.me.mine.at)&&r.tag!==S.cur);
+  if(rest.length)out.push({other:true,who:"同じ封のほかの瓶から",word:""},...rest.slice(0,8).map(r=>({branch:true,ob:true,who:label(r)||"同じ封の席",word:r.text,reply:r.reply||""})));
+  return out}
+function drawTree(animate){
+  const tree=$("#tree"),svg=$("#treeSvg");if(!tree||!svg)return;
+  const nodes=[...tree.querySelectorAll(".hito")],top=tree.getBoundingClientRect().top;let d="",side="",dots="",anchor=null;
+  const yOf=n=>n.getBoundingClientRect().top-top+12;
+  nodes.forEach(n=>{const y=yOf(n);
+    if(n.classList.contains("other")){anchor=null;return}
+    if(n.classList.contains("branch")){if(anchor!=null)side+=`<path class="side" d="M8 ${anchor} C 8 ${y-4}, 20 ${y}, 40 ${y}"/>`;return}
+    d+=(d?"L":"M")+"8 "+y;anchor=y;const you=n.classList.contains("you");
+    dots+=`<circle cx="8" cy="${y}" r="${you?5:3}" fill="${you?'var(--shu)':'var(--ink)'}"/>`});
+  if(nodes.filter(n=>!n.classList.contains("branch")).length<2)d+=" l0 0";
+  svg.innerHTML=`<path class="draw" d="${d}"/>${side}${dots}`;
+  const p=svg.querySelector(".draw");p.style.setProperty("--len",Math.ceil(p.getTotalLength())+1);
+  if(animate&&!reduce){tree.classList.remove("drawn");void tree.offsetWidth;requestAnimationFrame(()=>requestAnimationFrame(()=>tree.classList.add("drawn")))}
+  else tree.classList.add("drawn");
+  S.treeDone=true}
+
+/* ---------- 答え合わせ ---------- */
+const PX=p=>[20+Math.max(0,Math.min(5,p[0]))/5*280,131-Math.max(-2,Math.min(2,p[1]))/2*103];
+function tally(tea){const c={};S.reviews.filter(r=>r.tea===tea&&r.taste).forEach(r=>{c[r.taste]=(c[r.taste]||0)+1});return c}
+function chart(cfg,mine){
+  const ca=AJI.find(x=>x.w===cfg.answer);const cp=(ca&&ca.pos)||cfg.pos;if(!cp)return "";const [mx,my]=PX(cp);const last=mine[mine.length-1];const a=AJI.find(x=>x.w===last);
+  let you="";if(a&&a.pos){const [x,y]=PX(a.pos);you=`<circle class="you" cx="${x}" cy="${y}" r="11"/><text class="you-l" x="${x}" y="${y+(y<my?-18:27)}" text-anchor="middle">あなた</text>`}
+  return `<svg class="chart" viewBox="0 0 320 262" role="img" aria-label="味の位置。墨の点が茶師の答え、朱の輪があなたの答え">
+    <line class="ax" x1="20" y1="131" x2="300" y2="131"/><line class="ax" x1="160" y1="26" x2="160" y2="236"/>
+    <text x="160" y="14" text-anchor="middle">海の香り</text><text x="160" y="256" text-anchor="middle">草の香り</text>
+    <text x="20" y="150">軽い</text><text x="300" y="150" text-anchor="end">濃い</text>
+    <circle class="me" cx="${mx}" cy="${my}" r="6"/><text class="me-l" x="${mx-12}" y="${my-12}" text-anchor="end">茶師</text>${you}</svg>
+  <p class="chart-l">横はうまみの濃さ、縦は香りの向き</p>`}
+
+/* ---------- かざした画面 ---------- */
+const br=s=>esc(s).replace(/\n/g,"<br>");
+const rubied=s=>{let h=esc(s);Object.entries(WORDS.ruby||{}).forEach(([k,v])=>{h=h.split(esc(k)).join(`<ruby>${esc(k)}<rt>${esc(v)}</rt></ruby>`)});return h};
+const jday=s=>{if(!s)return "";const d=new Date(s+"T00:00");return isNaN(d)?esc(s):`${d.getMonth()+1}月${d.getDate()}日`};
+function tap(id){
+  S.cur=id;const tg=S.tags[id],t=S.teas[tg.tea]||{},cfg=TEA[tg.tea]||{};const no=id.replace(/\D/g,"").padStart(3,"0");
+  const nth=Math.max(1,myChain(tg).length-1);
+  const mineAns=S.me.answers||[];const asking=!mineAns.length||S.asking;
+  const cnt=tally(tg.tea),total=Object.values(cnt).reduce((a,b)=>a+b,0);
+  const passes=S.passes.filter(p=>(S.tags[p.tag]||{}).tea===tg.tea).length;
+  const voices=S.reviews.filter(r=>r.tea===tg.tea&&r.text);
+  const used=(S.me.gifts||[]).length+(S.me.bought||0),limit=cfg.limit||0,left=limit?Math.max(0,limit-used):Infinity;
+  const gift=S.kind==="gift";
+  const kazu=[cfg.shikomi&&[cfg.shikomi,"本","今季の仕込み"],cfg.ooiDays&&[cfg.ooiDays,"日","日を遮って育てた"],cfg.tsumiDays&&[cfg.tsumiDays,"日","手で摘んだ"]].filter(Boolean);
+  const facts=[cfg.hatake&&["畑",esc(cfg.hatake)],cfg.otodoke&&["お届け",`<b>${jday(cfg.otodoke)}</b>から ご指定の日に`],
+    cfg.limit&&["お一人",`<b>${esc(cfg.limit)}</b>本まで`]].filter(Boolean);
+  const core=!left?`${kan(limit)}本<br>承りました`:gift?((S.me.gifts||[]).length?"押したまま<br>もう一人へ":"押したまま<br>次の人へ"):"押したまま<br>自分に一本";
+  const hit=cfg.answer&&mineAns[mineAns.length-1]===cfg.answer;
+  return `
+  <section class="mae"><div class="in">
+    <div class="fuda"><svg class="bin" viewBox="0 0 120 260" aria-hidden="true"><path d="M50 8h20v34c0 6 4 10 9 16 7 8 11 18 11 30v150c0 9-6 14-14 14H44c-8 0-14-5-14-14V88c0-12 4-22 11-30 5-6 9-10 9-16z" fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke"/><path d="M48 8h24M30 120h60M30 196h60" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M52 140h16M52 152h16M52 164h10" stroke="currentColor" stroke-width="1.2"/></svg>
+    <p class="no">No.${esc(no)}　${esc([t.vintage?t.vintage+"年":"",t.season||""].filter(Boolean).join(" "))}</p>
+    <h1 class="name${S.stamped===id?"":S.gateDone?" up":" pre"}" id="name1">${esc(t.name||"")}</h1>
+    ${t.origin?`<p class="origin">${esc(t.origin)}</p>`:""}
+    <p class="uri">${br(WORDS.uri)}</p>
+    ${kazu.length?`<div class="kazu">${kazu.map(([n,u,l])=>`<div><b>${esc(n)}<small>${u}</small></b><span>${l}</span></div>`).join("")}</div>`:""}
+    </div>
+    <div class="denrai">
+      <p class="kicker">${esc(WORDS.kicker)}</p>
+      <p class="yurai">${rubied(WORDS.yurai)}</p>
+      <p class="ima">${br(WORDS.ima)}</p>
+      <p class="nin">${esc(WORDS.ninMae)}<b>${nth}</b>${esc(WORDS.ninAto)}です。</p>
+    </div>
+    ${(WORDS.nomikata||[]).length?`<ul class="nomikata">${WORDS.nomikata.map(([a,b],i)=>`<li><span class="n">${i+1}</span><div><b>${esc(a)}</b><span>${esc(b)}</span></div></li>`).join("")}</ul>`:""}
+    <p class="toi">${br(WORDS.toi)}</p>
+    <p class="toi-sub">${br(WORDS.toiSub)}</p>
+    ${asking?`<form id="af" autocomplete="off">
+      <div class="erabu" role="radiogroup" aria-label="近い味">${AJI.map(a=>`<label><input type="radio" name="aji" value="${esc(a.w)}">${esc(a.w)}</label>`).join("")}</div>
+      <div class="field"><label for="a-hoka">${esc(WORDS.hoka)}</label><input id="a-hoka" maxlength="20"></div>
+      <button class="nonda" id="a-btn" type="submit" disabled>${esc(WORDS.nonda)}</button>
+      <p class="msg" id="a-msg" aria-live="polite"></p>
+    </form>`:`<p class="toi-sub">答えました。この下で答え合わせを。</p>`}
+  </div></section>
+
+  <div class="in">
+  ${mineAns.length?`<section class="awase" id="awase">
+    <h2>${br(WORDS.awaseTitle)}</h2>
+    ${mineAns.length?`<div class="ans${S.fresh===1?" show":""}" id="ans">
+      ${cfg.answer?`<p class="chashi-ans">${esc(WORDS.chashiAns)}</p><p class="chashi-w"><em>${esc(cfg.answer)}</em></p>`:""}
+      ${cfg.chashi?`<p class="chashi-p">${esc(cfg.chashi)}</p>`:""}
+      ${cfg.answer?`<p class="douji">${esc(hit?WORDS.onaji:WORDS.chigau)}</p>`:""}
+      ${chart(cfg,mineAns)}
+      ${total?`<div class="minna"><h3>${esc(WORDS.minna)}　${total}人</h3>${total<10?`<p class="minna-w">${Object.entries(cnt).sort((a,b)=>b[1]-a[1]).map(([w,n])=>`<span${mineAns.includes(w)?' class="mine"':""}>${esc(w)} ${n}人</span>`).join("、")}</p>`:Object.entries(cnt).sort((a,b)=>b[1]-a[1]).map(([w,n])=>`<div class="bar${mineAns.includes(w)?" mine":""}"><span style="text-align:left">${esc(w)}</span><i><b style="width:${Math.round(n/total*100)}%"></b></i><span>${n}人</span></div>`).join("")}<p class="sub">${esc(WORDS.kawaru)}</p></div>`:""}
+      ${S.asking?"":`<button class="mini mouhitori" id="mouhitori" type="button">もう一人<br>答える</button>`}
+    </div>`:""}
+  </section>`:""}
+
+  <section class="tsunagari">
+    <h2>${br(WORDS.tsunagari)}</h2>
+    <p class="sub">${br(WORDS.tsunagariSub)}</p>
+    <div class="tree${S.treeDone?" drawn":""}" id="tree">
+      <svg id="treeSvg" aria-hidden="true"></svg>
+      ${rows(tg,nth).map(r=>`<div class="hito${r.you?" you":""}${r.branch?" branch":""}${r.other?" other":""}${r.empty?" empty":""}"><div class="who">${esc(r.who)}</div>${r.word?`<div class="kotoba">${esc(r.word)}</div>`:""}${r.reply?`<div class="re">茶師より　${esc(r.reply)}</div>`:""}</div>`).join("")}
+    </div>
+    ${(cfg.lots||[]).length?`<h3 class="sub" style="margin-top:40px">${esc(WORDS.fuu)}</h3><table class="fuu"><tbody>${cfg.lots.map(l=>`<tr><th>${esc(l.name)}</th><td>${esc(l.count)}本</td><td>${esc(l.note||"")}</td></tr>`).join("")}</tbody></table>`:""}
+  </section>
+
+  <section class="hitokoto" id="hitokoto">
+    <h2>${br(WORDS.hitokoto)}</h2>
+    <p class="sub">${br(WORDS.hitokotoSub)}</p>
+    ${S.me.mine?`<p class="done-note">残しました。${S.me.mine.id?`<button type="button" class="textbtn" id="k-del">自分の一言を消す</button>`:""}</p>`:`
+    <form id="kf" autocomplete="off">
+      <div class="field"><label for="k-text">一言</label><textarea id="k-text" maxlength="200"></textarea></div>
+      <div class="two"><div class="field"><label for="k-area">街</label><input id="k-area" maxlength="12"></div><div class="field"><label for="k-job">仕事</label><input id="k-job" maxlength="16"></div></div>
+      <label class="check"><input type="checkbox" id="k-letter">${esc(WORDS.tegami)}</label>
+      <div id="k-addr" hidden>
+        <div class="field"><label for="k-name">お名前</label><input id="k-name" maxlength="30" autocomplete="name"></div>
+        <div class="field"><label for="k-post">送り先の住所</label><input id="k-post" maxlength="120" autocomplete="street-address"></div>
+        <p class="sub">お名前と住所は茶師だけが読みます。画面には出ません。</p>
+      </div>
+      <button class="nonda" id="k-btn" type="submit">残す</button>
+      <p class="msg" id="k-msg" aria-live="polite"></p>
+    </form>`}
+  </section>
+
+  <section class="tsugi" id="tsugi">
+    <h2>${br(WORDS.tsugi)}</h2>
+    ${S.flash?"":`<p class="sub">${br(WORDS.tsugiSub)}</p>`}
+    ${facts.length?`<dl class="jijitsu">${facts.map(([a,b])=>`<dt>${a}</dt><dd>${b}</dd>`).join("")}</dl>`:""}
+    ${cfg.shimekiri?`<p class="shimekiri">${br(WORDS.shimekiri).replace("{日}",jday(cfg.shimekiri))}</p>`:""}
+    ${S.flash?`<p class="uketa" id="uketa" aria-live="polite"><span>${S.flash}</span></p>
+    <button class="mini" id="more" type="button">もう一本<br>頼む</button>`:`<form class="order" id="of" autocomplete="off">
+      ${left?`${gift?`<div class="field line"><input id="o-to" placeholder="贈る方のお名前" aria-label="贈る方のお名前"><span class="tail">様へ</span></div>`:""}
+      <div class="field line"><input id="o-from" placeholder="あなたのお名前" aria-label="あなたのお名前"><span class="tail">${gift?"様の席より":"様"}</span></div>
+      ${gift?`<button type="button" class="settei" id="o-settei"><span>贈り方</span><b id="o-sum">包んで届ける、お礼に</b></button>
+      <dialog class="sheet" id="o-sheet" aria-label="贈り方">
+        <div class="sheet-in">
+        <p class="ok-h">包み方</p>
+        <div class="opts" role="radiogroup" aria-label="包み方">${WORDS.tsutsumi.map(([v,a,b],i)=>`<label><input type="radio" name="o-wrap" id="w-${v}" value="${v}"${i===0?" checked":""}><b>${esc(a)}</b><span>${esc(b)}</span></label>`).join("")}</div>
+        <p class="ok-h">添え状</p>
+        <div class="opts opts-4" role="radiogroup" aria-label="添え状">${WORDS.fuda.map((a,i)=>`<label><input type="radio" name="o-card" id="c-${i}" value="${esc(a)}"${i===0?" checked":""}><b>${esc(a)}</b></label>`).join("")}</div>
+        <div class="field"><label for="o-msg">${esc(WORDS.soeru)}</label><textarea id="o-msg" maxlength="60" rows="2"></textarea></div>
+        <p class="how">${esc(WORDS.soeruSub)}。${esc(WORDS.nedanNashiNote)}</p>
+        <button type="button" class="nonda" id="o-done">設定を完了する</button>
+        </div>
+      </dialog>`:""}
+      <div class="two"><div class="field"><label for="o-date">届ける日</label><input id="o-date" type="date"></div><div class="field"><label for="o-tel">あなたの電話</label><input id="o-tel" type="tel" inputmode="tel"></div></div>
+      <p class="how">${esc(WORDS.todoke)}</p>
+      <p class="nedan">${cfg.price?`一本 ${yen(+cfg.price)}。${esc(WORDS.oshiharai)}`:esc(WORDS.nedanNashi)}</p>`:""}
+      <button class="hold${left?"":" owari"}" id="hold" type="button" aria-label="長押しで${gift?"次の人へ贈る":"自分に一本頼む"}"${left?"":" disabled"}>
+        <svg viewBox="0 0 168 168"><circle class="track" cx="84" cy="84" r="80"/><circle class="fill" id="ring" cx="84" cy="84" r="80"/></svg>
+        <span class="core">${core}</span>
+      </button>
+      <p class="hint" id="hint" aria-live="polite"></p>
+    </form>
+    ${left?`<button class="mini" id="self" type="button">${gift?"自分にも<br>一本":"贈る方に<br>戻る"}</button>`:""}`}
+  </section>
+
+  ${mineAns.length&&!S.flash?`<a class="obi" id="obi" href="#tsugi">次の一本を贈る</a>`:""}
+  <footer>${S.owner?`<nav><a href="/ippon/#admin">茶師の帳面へ</a></nav>`:""}</footer>
+  </div>`;
+}
+function ownerPanel(id,tg){
+  return `<section class="adm"><h3>渡したことを記す</h3><p class="lead">あなただけに見えています。タグ ${esc(id.toUpperCase())}、いま持っている人は${esc(tg.holder||"まだ決まっていません")}</p>
+  <form id="pf"><div class="two">
+    <div class="field"><label for="p-from">渡した人</label><input id="p-from" value="${esc(tg.holder||MASTER)}" required></div>
+    <div class="field"><label for="p-to">受け取った人</label><input id="p-to" required></div></div>
+    <div class="field"><label for="p-via">間に入った店</label><input id="p-via"></div>
+    <button class="sirusu" type="submit">記す</button>
+    <p class="msg" id="p-msg" aria-live="polite"></p></form></section>`}
+
+async function myOrders(){const ref=S.db.collection("orders").doc(S.uid);const cur=await ref.get().catch(()=>null);return {ref,d:(cur&&cur.exists&&cur.data())||{}}}
+function bindTap(id){
+  const tg=S.tags[id],cfg=TEA[tg.tea]||{};
+  const go=(sel,b)=>setTimeout(()=>$(sel)?.scrollIntoView({behavior:reduce?"auto":"smooth",block:b||"start"}),120);
+  const nd=$("#nonda");if(nd)nd.onclick=()=>go("#awase");
+  const af=$("#af");
+  if(af){const hk=$("#a-hoka"),ab=$("#a-btn");const can=()=>{ab.disabled=!(af.querySelector("input[name=aji]:checked")||hk.value.trim())};
+    af.onchange=e=>{if(e.target.name==="aji")hk.value="";can()};
+    hk.oninput=()=>{if(hk.value)af.querySelectorAll("input[name=aji]").forEach(x=>x.checked=false);can()};
+    af.onsubmit=async e=>{e.preventDefault();const pick=(af.querySelector("input[name=aji]:checked")||{}).value||hk.value.trim();
+      if(!pick){$("#a-msg").textContent="近いものを一つ選んでください";return}
+      $("#a-btn").disabled=true;
+      const r={tea:tg.tea,tag:id,holder:tg.holder||"",area:"",age:"",job:"",text:"",taste:pick.slice(0,20),at:new Date().toISOString()};
+      try{await S.db.collection("reviews").add(r)}catch(err){}
+      (S.me.answers??=[]).push(r.taste);S.asking=false;S.fresh=1;saveMe(id);render();go("#ans")}}
+  const mh=$("#mouhitori");if(mh)mh.onclick=()=>{S.asking=true;render();go("#af","center")};
+  const kf=$("#kf");
+  if(kf){const lt=$("#k-letter"),ad=$("#k-addr");lt.onchange=()=>{ad.hidden=!lt.checked};
+    kf.onsubmit=async e=>{e.preventDefault();const text=$("#k-text").value.trim();if(!text){$("#k-text").focus();return}
+      if(lt.checked&&!($("#k-name").value.trim()&&$("#k-post").value.trim())){$("#k-msg").textContent="手紙の送り先を書いてください";return}
+      const btn=$("#k-btn");btn.disabled=true;
+      const r={tea:tg.tea,tag:id,holder:tg.holder||"",area:$("#k-area").value.trim(),age:"",job:$("#k-job").value.trim(),text,taste:"",at:new Date().toISOString()};
+      try{const a=await S.db.collection("reviews").add(r);
+        if(lt.checked&&S.uid){const {ref,d}=await myOrders();await ref.set({...d,list:d.list||[],letter:{name:$("#k-name").value.trim(),addr:$("#k-post").value.trim(),tag:id,text,at:r.at}})}
+        S.me.mine={area:r.area,job:r.job,text,at:r.at,id:a&&a.id||""};S.me.wrote=true;saveMe(id);S.treeDone=false;render();go("#hitokoto")}
+      catch(err){btn.disabled=false;$("#k-msg").textContent="この端末からは残せませんでした。茶師に直接お伝えください。"}}}
+  const kd=$("#k-del");if(kd)kd.onclick=async()=>{kd.disabled=true;
+    try{await S.db.collection("reviews").doc(S.me.mine.id).delete();S.me.mine=null;S.me.wrote=false;saveMe(id);S.treeDone=false;render()}
+    catch(err){kd.disabled=false;kd.textContent="消せませんでした。もう一度押してください"}};
+  const sf=$("#self");if(sf)sf.onclick=()=>{S.kind=S.kind==="gift"?"self":"gift";S.flash="";render();go("#hold","center")};
+  const ob=$("#obi");if(ob){ob.onclick=e=>{e.preventDefault();$("#tsugi")?.scrollIntoView({behavior:reduce?"auto":"smooth",block:"start"})};
+    const ts=$("#tsugi");if(ts&&"IntersectionObserver" in window){new IntersectionObserver(es=>es.forEach(x=>ob.classList.toggle("hide",x.isIntersecting))).observe(ts)}}
+  const mo=$("#more");if(mo)mo.onclick=()=>{S.flash="";render();go("#of")};
+  bindOrder(id);
+  const ag=$("#again");if(ag)ag.onclick=()=>{S.stamped=null;S.treeDone=false;S.gateDone=false;scrollTo(0,0);render();gateRun(true)};
+  const pf=$("#pf");
+  if(pf)pf.onsubmit=async e=>{e.preventDefault();const from=$("#p-from").value.trim(),to=$("#p-to").value.trim(),via=$("#p-via").value.trim();
+    try{await S.db.collection("passes").add({from,to,via,tag:id,at:new Date().toISOString()});await S.db.doc("tags/"+id).update({holder:to});$("#p-msg").textContent="記しました"}
+    catch(err){$("#p-msg").textContent="記せませんでした"}};
+  const first=S.gateDone&&S.stamped!==id;
+  if(first)S.stamped=id;
+  drawTree(first||!S.treeDone);
+  if(S.fresh>=0)setTimeout(()=>{S.fresh=-1},900);
+}
+function bindOrder(id){
+  const f=$("#of"),hold=$("#hold");if(!f||!hold||hold.disabled)return;
+  const tg=S.tags[id],t=S.teas[tg.tea]||{},cfg=TEA[tg.tea]||{};const kind=S.kind;
+  const d=$("#o-date");const ymd=x=>x.getFullYear()+"-"+String(x.getMonth()+1).padStart(2,"0")+"-"+String(x.getDate()).padStart(2,"0");
+  const tm=ymd(new Date(Date.now()+864e5)),min=cfg.otodoke&&cfg.otodoke>tm?cfg.otodoke:tm;d.min=min;if(!d.value||d.value<min)d.value=min;
+  const ring=$("#ring"),hint=$("#hint");
+  const idle=()=>{hint.textContent="離すと戻ります"};
+  idle();f.onsubmit=e=>e.preventDefault();
+  const sh=$("#o-sheet"),sum=()=>{const w=f.querySelector("input[name=o-wrap]:checked"),c=f.querySelector("input[name=o-card]:checked");const m=($("#o-msg")||{}).value||"";
+    if($("#o-sum"))$("#o-sum").textContent=[w&&w.closest("label").querySelector("b").textContent,c&&c.value,m&&"一言あり"].filter(Boolean).join("、")};
+  if(sh){sum();$("#o-settei").onclick=()=>{try{sh.showModal()}catch(_){sh.setAttribute("open","")}};$("#o-done").onclick=()=>{sum();try{sh.close()}catch(_){sh.removeAttribute("open")}};sh.onclick=e=>{if(e.target===sh){sum();sh.close()}}}
+  const C=2*Math.PI*80,DUR=1100;let prog=0,dir=0,last=0,raf=0,busy=false;
+  ring.style.strokeDasharray=C;ring.style.strokeDashoffset=C;
+  const need=()=>{const ask=[[kind==="gift"&&"#o-to","贈る方のお名前"],["#o-from","あなたのお名前"],["#o-date","届ける日"],["#o-tel","あなたの電話"]];
+    for(const [sel,nm] of ask){if(sel&&!$(sel).value.trim())return [sel,nm]}return null};
+  const tick=now=>{const dt=Math.min(now-last,50);last=now;prog=Math.max(0,Math.min(1,prog+dir*dt/(dir>0?DUR:DUR/2.2)));
+    ring.style.strokeDashoffset=C*(1-prog);
+    if(prog>=1){done();return}
+    if(prog<=0&&dir<0){dir=0;S.pressing=false;return}
+    raf=requestAnimationFrame(tick)};
+  const start=e=>{if(busy)return;e.preventDefault();
+    const miss=need();if(miss){hint.textContent=`先に、${miss[1]}を`;$(miss[0]).focus();return}
+    S.pressing=true;dir=1;hold.classList.add("pressing");hint.textContent="そのまま";cancelAnimationFrame(raf);last=performance.now();raf=requestAnimationFrame(tick)};
+  const stop=()=>{if(dir!==1)return;dir=-1;hold.classList.remove("pressing");idle();cancelAnimationFrame(raf);last=performance.now();raf=requestAnimationFrame(tick)};
+  const done=async()=>{dir=0;busy=true;hold.classList.remove("pressing");hint.textContent="承っています";
+    const o={tag:id,tea:tg.tea,kind,line:tg.tea,lineName:t.name||tg.tea,price:+cfg.price||0,to:kind==="gift"?$("#o-to").value.trim():"",from:$("#o-from").value.trim(),
+      date:d.value,tel:$("#o-tel").value.trim(),
+      wrap:kind==="gift"?((f.querySelector("input[name=o-wrap]:checked")||{}).value||""):"",card:kind==="gift"?((f.querySelector("input[name=o-card]:checked")||{}).value||""):"",msg:kind==="gift"?(($("#o-msg")||{}).value||"").trim().slice(0,60):"",by:S.uid||"",gen:myChain(tg).length,at:new Date().toISOString()};
+    try{if(!S.uid)throw 0;const {ref,d:cur}=await myOrders();const list=cur.list||[];list.push(o);await ref.set({...cur,list})}
+    catch(err){busy=false;S.pressing=false;prog=0;ring.style.strokeDashoffset=C;hint.textContent="この端末からは頼めませんでした。茶師に直接お電話ください。";return}
+    try{navigator.vibrate&&navigator.vibrate([18,40,28])}catch(_){}
+    const when=jday(o.date);
+    if(kind==="gift"){(S.me.gifts??=[]).push({to:o.to,date:o.date})}else{S.me.bought=(S.me.bought||0)+1;S.kind="gift"}
+    S.flash=kind==="gift"?`${esc(o.to)}様へ<br><b>${when}</b>にお届けします。`:`<b>${when}</b>に<br>お手元へお届けします。`;
+    S.pressing=false;saveMe(id);render();
+    setTimeout(()=>$("#uketa")?.scrollIntoView({behavior:reduce?"auto":"smooth",block:"center"}),150)};
+  hold.addEventListener("pointerdown",start);
+  ["pointerup","pointerleave","pointercancel"].forEach(ev=>hold.addEventListener(ev,stop));
+  hold.addEventListener("keydown",e=>{if((e.key===" "||e.key==="Enter")&&!e.repeat)start(e)});
+  hold.addEventListener("keyup",e=>{if(e.key===" "||e.key==="Enter")stop()});
+  hold.addEventListener("contextmenu",e=>e.preventDefault());
+}
+
+/* ---------- 枝の全体（帳面） ---------- */
+function treeSVG(){
+  const kids={},tos=new Set();S.passes.forEach(p=>{(kids[p.from]??=[]).push(p.to);tos.add(p.to)});
+  const roots=Object.keys(kids).filter(k=>!tos.has(k));if(!roots.length)roots.push(MASTER);
+  const levels=[];const seen=new Set();
+  (function walk(n,d){if(seen.has(n))return;seen.add(n);(levels[d]??=[]).push(n);(kids[n]||[]).forEach(k=>walk(k,d+1))})(roots[0],0);
+  const W=360,gy=64,pos={};
+  levels.forEach((row,d)=>row.forEach((n,i)=>pos[n]={x:row.length===1?W/2:24+(W-48)*i/(row.length-1),y:26+d*gy}));
+  const H=26+(levels.length-1)*gy+34;let o="";
+  Object.entries(kids).forEach(([f,ts])=>ts.forEach(t=>{const a=pos[f],b=pos[t];if(a&&b)o+=`<path d="M${a.x} ${a.y} C${a.x} ${a.y+40} ${b.x} ${b.y-34} ${b.x} ${b.y}"/>`}));
+  Object.entries(pos).forEach(([n,p])=>o+=`<circle cx="${p.x}" cy="${p.y}" r="3.6"/><text x="${p.x+8}" y="${p.y+16}">${esc(n)}</text>`);
+  return `<svg class="ztree" viewBox="0 0 ${W} ${H}" role="img" aria-label="枝の全体">${o}</svg>`}
+
+/* ---------- 一覧 ---------- */
+function index(){const ids=Object.keys(S.tags).sort();
+  return `<section class="hon"><svg class="seal" viewBox="0 0 64 64" aria-hidden="true">${SEAL}</svg>
+  <p class="q">瓶の印に、<br>かざしてください</p>
+  ${S.owner?`<div class="list">${ids.map(id=>`<a href="/ippon/t/${id}"><span>${esc((S.teas[S.tags[id].tea]||{}).name||"")}</span><span class="pill">${esc(id.toUpperCase())}</span></a>`).join("")}</div>`:""}</section>
+  ${S.owner?`<footer><nav><a href="/ippon/#admin">茶師の帳面へ</a></nav></footer>`:""}`}
+
+/* ---------- 茶師の帳面 ---------- */
+function admin(){
+  const ids=Object.keys(S.tags).sort(),base=(S.site.url||"").replace(/#.*$/,"");
+  const tapped=S.reviews.length;
+  const gifters=new Set(S.orders.filter(o=>o.kind==="gift").map(o=>o.by||o.from)).size;
+  const receivedSelf=new Set(S.orders.filter(o=>o.kind==="self"&&(o.gen||0)>1).map(o=>o.by||o.from)).size;
+  const cnt={};S.orders.forEach(o=>{const k=o.by||o.from;cnt[k]=(cnt[k]||0)+1});const twice=Object.values(cnt).filter(n=>n>=2).length;
+  const gift=S.orders.filter(o=>o.kind==="gift").length,born=S.passes.length?(gift/Math.max(1,new Set(S.passes.map(p=>p.to)).size)).toFixed(1):"0";
+  return `<section class="hon"><svg class="seal" viewBox="0 0 64 64" aria-hidden="true">${SEAL}</svg>
+    <p class="q">茶師の帳面</p><p class="lead">あなただけに見えています</p>
+    <dl class="kpi"><dt>${tapped}</dt><dd>かざして記した人</dd><dt>${gifters}</dt><dd>次に誰かへ贈った人</dd><dt class="key">${receivedSelf}</dt><dd class="key">贈られて、自分で買った人</dd><dt>${twice}</dt><dd>二本目を頼んだ人</dd></dl>
+    <p class="lead">受け取った一人あたり、次に${born}本を生んでいます</p></section>
+  ${watashi()}
+  <section class="adm"><h3>頼まれた一本</h3>
+    ${S.orders.length?`<div class="tbl"><table><thead><tr><th>届ける日</th><th>中身</th><th>誰へ</th><th>連絡</th></tr></thead><tbody>${S.orders.slice().sort((a,b)=>(a.date||"").localeCompare(b.date||"")).map(o=>`<tr><td>${esc(o.date)}</td><td>${esc(o.lineName)}<br><span class="pill">${yen(+o.price||0)}　${esc((o.tag||"").toUpperCase())}</span></td><td>${o.kind==="gift"?`${esc(o.to)}様<br><span class="pill">${esc(o.from)}様の席より　${esc(({wrap:"包んで",self:"包みを添えて",none:"包まず"})[o.wrap]||"")}　${esc(o.card||"")}${o.msg?"<br>「"+esc(o.msg)+"」":""}</span>`:`${esc(o.from)}様ご自身`}</td><td><code>${esc(o.tel)}</code></td></tr>`).join("")}</tbody></table></div>`:`<p class="lead">まだありません</p>`}</section>
+  <section class="adm"><h3>タグと、NFC に書く URL</h3>
+    <div class="tbl"><table><thead><tr><th>タグ</th><th>お茶</th><th>持っている人</th><th>NFC に書く URL</th></tr></thead><tbody>
+    ${ids.map(id=>{const tg=S.tags[id],u=base?base.replace(/\/$/,"")+"/t/"+id:"";return `<tr><td><a href="/ippon/t/${id}">${esc(id.toUpperCase())}</a><br><span class="pill">${esc({bottle:"ボトル",card:"カード",shop:"お店"}[tg.kind]||"")}</span></td><td>${esc((S.teas[tg.tea]||{}).name||tg.tea)}</td><td>${esc(tg.holder||"")}</td><td>${u?`<code>${esc(u)}</code><br><button type="button" class="textbtn cp" data-u="${esc(u)}">写す</button>`:""}</td></tr>`}).join("")}
+    </tbody></table></div></section>
+  <section class="adm"><h3>タグを足す・直す</h3><form id="tf">
+    <div class="three"><div class="field"><label for="t-id">タグ</label><input id="t-id" required pattern="[a-zA-Z0-9-]+" placeholder="b011"></div>
+    <div class="field"><label for="t-kind">種類</label><select id="t-kind"><option value="bottle">ボトル</option><option value="card">カード</option><option value="shop">お店</option></select></div>
+    <div class="field"><label for="t-holder">持っている人</label><input id="t-holder" value="${MASTER}"></div></div>
+    <div class="field"><label for="t-tea">お茶</label><select id="t-tea">${Object.entries(S.teas).map(([k,t])=>`<option value="${esc(k)}">${esc(t.name)}　${esc(k)}</option>`).join("")}</select></div>
+    <button class="sirusu" type="submit">保存</button><p class="msg" id="t-msg"></p></form></section>
+  <section class="adm"><h3>お茶を足す・直す</h3><form id="ef">
+    <div class="two"><div class="field"><label for="e-id">お茶の記号</label><input id="e-id" required pattern="[a-zA-Z0-9-]+" placeholder="gyokuro-2026"></div><div class="field"><label for="e-name">茶銘</label><input id="e-name" required></div></div>
+    <div class="three"><div class="field"><label for="e-origin">産地</label><input id="e-origin"></div><div class="field"><label for="e-vintage">年</label><input id="e-vintage" inputmode="numeric"></div><div class="field"><label for="e-season">暦</label><input id="e-season"></div></div>
+    <div class="two"><div class="field"><label for="e-umami">うまみ　-5から5</label><input id="e-umami" type="number" min="-5" max="5" required></div><div class="field"><label for="e-shibumi">渋み　-5から5</label><input id="e-shibumi" type="number" min="-5" max="5" required></div></div>
+    <div class="field"><label for="e-story">瓶の一行</label><textarea id="e-story" rows="3"></textarea></div>
+    <button class="sirusu" type="submit">保存</button><p class="msg" id="e-msg"></p></form></section>
+  <section class="adm"><h3>この画面の URL</h3><form id="uf">
+    <div class="field"><label for="u-url">アドレス欄の URL の、# より前</label><input id="u-url" value="${esc(S.site.url||"")}"></div>
+    <button class="sirusu" type="submit">保存</button><p class="msg" id="u-msg"></p></form></section>
+  <section class="adm"><h3>手紙を待っている人</h3>${S.orderDocs.filter(o=>o.letter).length?`<div class="voices">${S.orderDocs.filter(o=>o.letter).map(o=>`<div class="voice"><p class="who">${esc(o.letter.name)}　${esc((o.letter.tag||"").toUpperCase())}</p><p class="k">${esc(o.letter.addr)}</p><p class="re">${esc(o.letter.text)}</p></div>`).join("")}</div>`:`<p class="lead">まだありません</p>`}</section>
+  <section class="adm"><h3>一言と答え</h3>${S.reviews.length?`<div class="voices">${S.reviews.map(r=>`<div class="voice"><p class="who">${esc([(S.teas[r.tea]||{}).name,r.area,r.job,(r.tag||"").toUpperCase()].filter(Boolean).join("　"))}</p><p class="k">${esc(r.text||(r.taste?"答え　"+r.taste:""))}</p>${r.text&&r._id?`<form class="re-f" data-id="${esc(r._id)}"><input aria-label="茶師の返し" value="${esc(r.reply||"")}" placeholder="茶師の返し"><button class="textbtn" type="submit">返す</button></form>`:""}</div>`).join("")}</div>`:`<p class="lead">まだありません</p>`}</section>
+  <section class="adm"><h3>枝の全体</h3>${treeSVG()}</section>
+  <footer><nav><a href="/ippon/">一覧へ</a></nav></footer>`}
+/* ---------- 渡したことを記す（帳面だけ） ---------- */
+// 注文で贈られた分は、届ける瓶のタグを選ぶだけで道につながる。手渡しの分だけ手で記す
+const okey=o=>(o.by||"")+"|"+(o.at||"");
+function watashi(){
+  const linked=new Set(S.passes.map(p=>p.order).filter(Boolean));
+  const gifts=S.orders.filter(o=>o.kind==="gift"&&!linked.has(okey(o)));
+  const ids=Object.keys(S.tags).sort();
+  const free=ids.filter(id=>(S.tags[id].holder||MASTER)===MASTER);
+  const opt=(list,sel)=>list.map(id=>`<option value="${esc(id)}"${id===sel?" selected":""}>${esc(id.toUpperCase())}　${esc((S.teas[S.tags[id].tea]||{}).name||"")}</option>`).join("");
+  return `<section class="adm"><h3>渡したことを記す</h3>
+    <p class="lead">注文で贈られた分は、届ける瓶のタグを選ぶと、渡ってきた道につながります</p>
+    ${gifts.length?`<div class="voices">${gifts.map((o,i)=>`<form class="link-f" data-i="${i}"><p class="who">${esc(o.date||"")}　${esc((o.tag||"").toUpperCase())} から</p>
+      <p class="k">${esc(o.from)}様の席より　${esc(o.to)}様へ</p>
+      <div class="re-f"><select aria-label="届ける瓶のタグ">${opt(free.length?free:ids,"")}</select><button class="textbtn" type="submit">この瓶で道につなげる</button></div>
+      <p class="msg"></p></form>`).join("")}</div>`:`<p class="lead">つなぐ注文はありません</p>`}
+    <h3 style="margin-top:34px;font-size:18px">手渡しの分</h3>
+    <p class="lead">注文を通さずに渡した瓶だけ、ここで記します</p>
+    <form id="pf">
+      <div class="field"><label for="p-tag">タグ</label><select id="p-tag">${opt(ids,ids[0])}</select></div>
+      <div class="two"><div class="field"><label for="p-from">渡した人</label><input id="p-from" value="${esc(MASTER)}" required></div>
+      <div class="field"><label for="p-to">受け取った人</label><input id="p-to" required></div></div>
+      <div class="field"><label for="p-via">間に入った店</label><input id="p-via"></div>
+      <button class="sirusu" type="submit">記す</button><p class="msg" id="p-msg" aria-live="polite"></p>
+    </form></section>`}
+function bindWatashi(){
+  const linked=new Set(S.passes.map(p=>p.order).filter(Boolean));
+  const gifts=S.orders.filter(o=>o.kind==="gift"&&!linked.has(okey(o)));
+  document.querySelectorAll(".link-f").forEach(f=>f.onsubmit=async e=>{e.preventDefault();const o=gifts[+f.dataset.i],tag=f.querySelector("select").value,m=f.querySelector(".msg");
+    if(!o||!tag)return;const from=(S.tags[o.tag]||{}).holder||o.from;
+    try{await S.db.collection("passes").add({from,to:o.to,via:"",tag,order:okey(o),at:new Date().toISOString()});await S.db.doc("tags/"+tag).update({holder:o.to});m.textContent="つなぎました"}
+    catch(err){m.textContent="つなげませんでした"}});
+  const pf=$("#pf");if(pf){const pt=$("#p-tag");pt.onchange=()=>{$("#p-from").value=(S.tags[pt.value]||{}).holder||MASTER};
+    pf.onsubmit=async e=>{e.preventDefault();const tag=pt.value,from=$("#p-from").value.trim(),to=$("#p-to").value.trim(),via=$("#p-via").value.trim();if(!to)return;
+      try{await S.db.collection("passes").add({from,to,via,tag,at:new Date().toISOString()});await S.db.doc("tags/"+tag).update({holder:to});$("#p-msg").textContent="記しました"}
+      catch(err){$("#p-msg").textContent="記せませんでした"}}}}
+function bindAdmin(){
+  bindWatashi();
+  document.querySelectorAll(".cp").forEach(b=>b.onclick=async()=>{try{await navigator.clipboard.writeText(b.dataset.u);b.textContent="写しました"}catch(_){b.textContent="長押しで写してください"}});
+  const save=(fid,mid,fn)=>{const f=$(fid);f.onsubmit=async e=>{e.preventDefault();try{await fn();$(mid).textContent="保存しました"}catch(err){$(mid).textContent="保存できませんでした"}}};
+  save("#tf","#t-msg",()=>S.db.doc("tags/"+$("#t-id").value.toLowerCase()).set({kind:$("#t-kind").value,tea:$("#t-tea").value,holder:$("#t-holder").value.trim()}));
+  save("#ef","#e-msg",()=>S.db.doc("teas/"+$("#e-id").value.toLowerCase()).set({name:$("#e-name").value,origin:$("#e-origin").value,vintage:$("#e-vintage").value?+$("#e-vintage").value:null,season:$("#e-season").value,umami:+$("#e-umami").value,shibumi:+$("#e-shibumi").value,story:$("#e-story").value}));
+  document.querySelectorAll(".re-f").forEach(f=>f.onsubmit=async e=>{e.preventDefault();const b=f.querySelector("button");try{await S.db.collection("reviews").doc(f.dataset.id).update({reply:f.querySelector("input").value.trim()});b.textContent="返しました"}catch(err){b.textContent="返せませんでした"}});
+  save("#uf","#u-msg",()=>S.db.doc("config/site").set({url:$("#u-url").value.trim()}));
+}
+
+/* ---------- 自分の記録（その人だけが読める） ---------- */
+function loadMe(id){S.me=store("nj-me-"+id)||{}}
+function saveMe(id){store("nj-me-"+id,S.me);if(S.db&&S.uid){S.db.collection("data/users/"+S.uid).doc("tag-"+id).set(S.me).catch(()=>{})}}
+
+/* ---------- 入口と描画 ---------- */
+let lastRoute=null,gateT=[];
+function gateRun(force){
+  const g=$("#gate");if(reduce){S.gateDone=true;return}
+  gateT.forEach(clearTimeout);g.className="";g.hidden=false;S.gateDone=false;
+  const through=()=>{gateT.forEach(clearTimeout);g.className="through";S.gateDone=true;
+    const s=$("#seal1"),nm=$("#name1");if(nm&&S.stamped!==lastRoute){nm.classList.remove("pre");nm.classList.add("up")}if(s&&S.stamped!==lastRoute){s.classList.remove("pre");s.classList.add("stamp");S.stamped=lastRoute;drawTree(true)}
+    gateT=[setTimeout(()=>g.hidden=true,1200)]};
+  gateT=[setTimeout(()=>g.classList.add("open"),500),setTimeout(()=>g.classList.add("in"),1500),setTimeout(through,2100)];
+  g.onclick=through}
+function render(){
+  const v=$("#view"),h=route();
+  if(!S.ready)return;
+  if(!S.db){v.innerHTML=`<div class="in"><section class="hon"><svg class="seal" viewBox="0 0 64 64" aria-hidden="true">${SEAL}</svg><p class="q">つながりません<br>開き直してください</p></section></div>`;return}
+  if(h!==lastRoute){lastRoute=h;S.flash="";S.fresh=-1;S.kind="gift";S.asking=false;S.treeDone=false;if(S.tags[h])loadMe(h)}
+  // 書きかけの欄は描き直しても残す
+  const keep={};v.querySelectorAll("input[id],textarea[id],select[id]").forEach(e=>keep[e.id]=e.type==="radio"||e.type==="checkbox"?e.checked:e.value);
+  if(h==="admin"&&S.owner){v.innerHTML=`<div class="in">${admin()}</div>`;bindAdmin()}
+  else if(S.tags[h]){v.innerHTML=tap(h);
+    Object.entries(keep).forEach(([k,val])=>{const e=document.getElementById(k);if(!e||e.closest("#gate"))return;if(e.type==="radio"||e.type==="checkbox")e.checked=val;else if(e.type!=="date"||val)e.value=val});
+    bindTap(h)}
+  else v.innerHTML=`<div class="in">${index()}</div>`;
+}
+addEventListener("hashchange",()=>{render();scrollTo(0,0)});
+addEventListener("resize",()=>drawTree(false));
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>drawTree(false));
+(async()=>{
+  try{history.scrollRestoration="manual"}catch(e){}
+  if(/^[a-z]\d+/.test(route())&&!store("nj-gate")){store("nj-gate",1);gateRun()}else S.gateDone=true;
+  $("#gate .gate-word").textContent=WORDS.gate;
+  const timer=setTimeout(()=>{if(!S.ready){S.ready=true;$("#view").innerHTML=`<section class="hon"><p class="q" style="font-size:26px">つながりません。電波の良い所で開き直してください</p></section>`}},10000);
+  const [db,user]=await Promise.all([window.claude?.use?.("db")??null,window.claude?.use?.("user")??null]);
+  S.db=db;S.owner=user?await user.isOwner().catch(()=>false):false;S.uid=user?await user.id().catch(()=>null):null;
+  if(!db){clearTimeout(timer);S.ready=true;render();return}
+  const map=s=>Object.fromEntries(s.docs.map(d=>[d.id,d.data()]));
+  let got=0;const need=S.owner?6:5;const mark=()=>{if(++got>=need){clearTimeout(timer);S.ready=true}render()};
+  const busy=()=>S.pressing||document.activeElement?.matches?.("input,textarea,select");
+  const once=f=>{let d=false;return s=>{f(s);if(!d){d=true;mark()}else if(S.ready&&!busy())render()}};
+  const fail=()=>{};
+  db.collection("teas").onSnapshot(once(s=>S.teas=map(s)),fail);
+  db.collection("tags").onSnapshot(once(s=>S.tags=map(s)),fail);
+  db.collection("reviews").orderBy("at","desc").onSnapshot(once(s=>S.reviews=s.docs.map(d=>({...d.data(),_id:d.id}))),fail);
+  db.collection("passes").orderBy("at").onSnapshot(once(s=>S.passes=s.docs.map(d=>d.data())),fail);
+  db.doc("config/site").onSnapshot(once(s=>S.site=s.exists?s.data():{}),fail);
+  if(S.owner)db.collection("orders").onSnapshot(once(s=>S.orders=(S.orderDocs=s.docs.map(d=>d.data()),s.docs).flatMap(d=>d.data().list||[]).sort((a,b)=>(a.at||"").localeCompare(b.at||""))),fail);
+})();
+}
+</script>
+</body></html>
