@@ -481,6 +481,16 @@ footer{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
 .tsugi .tail{justify-self:end;font-size:13px;color:var(--ink-soft);padding:0 4px}
 /* 4 下の帯は平らな深緑に白い字 */
 .obi{background:var(--green);box-shadow:none;color:#fff}
+
+/* 年配の方にも読める大きさ。添え書きも 14px を下回らない */
+.nomikata span{font-size:15px}
+.how{font-size:15px;line-height:1.85}
+.hint{font-size:14px}
+.tsugi .tail{font-size:14px}
+.settei,.settei b{font-size:15px}
+.opts span{font-size:14px}
+.field label{font-size:14px}
+.tap2{display:block;margin:10px auto 0;font-size:14px}
 </style>
 
 <div id="gate" aria-hidden="true" hidden>
@@ -546,6 +556,7 @@ const WORDS={
   soeru:"添える一言",
   soeruSub:"茶師が添え状に手で書き写します",
   nedanNashiNote:"値段の分かる物は入れません。送り状には、あなたのお名前を「様の席より」と書きます。",
+  renraku:"お名前と電話は、お届けの連絡だけに使います。",
   todoke:"届け先は、前の日に茶師がお電話で伺います。芦屋、夙川、岡本、神戸、大阪市内は、その朝に詰めた一本を茶師が手渡しします。その外へは冷蔵便で。",
 };
 // 選べる味の言葉。pos は味の図の位置：うまみ 0〜5（右ほど濃い）、香り -2〜2（上ほど海、下ほど草）
@@ -741,13 +752,14 @@ function tap(id){
         </div>
       </dialog>`:""}
       <div class="two"><div class="field"><label for="o-date">届ける日</label><input id="o-date" type="date"></div><div class="field"><label for="o-tel">あなたの電話</label><input id="o-tel" type="tel" inputmode="tel"></div></div>
-      <p class="how">${esc(WORDS.todoke)}</p>
+      <p class="how">${esc(WORDS.todoke)}${esc(WORDS.renraku)}</p>
       <p class="nedan">${cfg.price?`一本 ${yen(+cfg.price)}。${esc(WORDS.oshiharai)}`:esc(WORDS.nedanNashi)}</p>`:""}
       <button class="hold${left?"":" owari"}" id="hold" type="button" aria-label="長押しで${gift?"次の人へ贈る":"自分に一本頼む"}"${left?"":" disabled"}>
         <svg viewBox="0 0 168 168"><circle class="track" cx="84" cy="84" r="80"/><circle class="fill" id="ring" cx="84" cy="84" r="80"/></svg>
         <span class="core">${core}</span>
       </button>
       <p class="hint" id="hint" aria-live="polite"></p>
+      ${left?`<button type="button" class="textbtn tap2" id="tap2">長押しが難しい方は、こちら</button>`:""}
     </form>
     ${left?`<button class="mini" id="self" type="button">${gift?"自分にも<br>一本":"贈る方に<br>戻る"}</button>`:""}`}
   </section>
@@ -850,6 +862,9 @@ function bindOrder(id){
   hold.addEventListener("keydown",e=>{if((e.key===" "||e.key==="Enter")&&!e.repeat)start(e)});
   hold.addEventListener("keyup",e=>{if(e.key===" "||e.key==="Enter")stop()});
   hold.addEventListener("contextmenu",e=>e.preventDefault());
+  const t2=$("#tap2");if(t2){let armed=false;t2.onclick=()=>{if(busy)return;const miss=need();if(miss){hint.textContent=`先に、${miss[1]}を`;$(miss[0]).focus();return}
+    if(!armed){armed=true;t2.textContent="もう一度押すと頼みます";hint.textContent="";return}
+    prog=1;ring.style.strokeDashoffset=0;done()}}
 }
 
 /* ---------- 枝の全体（帳面） ---------- */
@@ -884,6 +899,7 @@ function admin(){
     <p class="q">茶師の帳面</p><p class="lead">あなただけに見えています</p>
     <dl class="kpi"><dt>${tapped}</dt><dd>かざして記した人</dd><dt>${gifters}</dt><dd>次に誰かへ贈った人</dd><dt class="key">${receivedSelf}</dt><dd class="key">贈られて、自分で買った人</dd><dt>${twice}</dt><dd>二本目を頼んだ人</dd></dl>
     <p class="lead">受け取った一人あたり、次に${born}本を生んでいます</p></section>
+  ${aki()}
   ${watashi()}
   <section class="adm"><h3>頼まれた一本</h3>
     ${S.orders.length?`<div class="tbl"><table><thead><tr><th>届ける日</th><th>中身</th><th>誰へ</th><th>連絡</th></tr></thead><tbody>${S.orders.slice().sort((a,b)=>(a.date||"").localeCompare(b.date||"")).map(o=>`<tr><td>${esc(o.date)}</td><td>${esc(o.lineName)}<br><span class="pill">${yen(+o.price||0)}　${esc((o.tag||"").toUpperCase())}</span></td><td>${o.kind==="gift"?`${esc(o.to)}様<br><span class="pill">${esc(o.from)}様の席より　${esc(({wrap:"包んで",self:"包みを添えて",none:"包まず"})[o.wrap]||"")}　${esc(o.card||"")}${o.msg?"<br>「"+esc(o.msg)+"」":""}</span>`:`${esc(o.from)}様ご自身`}</td><td><code>${esc(o.tel)}</code></td></tr>`).join("")}</tbody></table></div>`:`<p class="lead">まだありません</p>`}</section>
@@ -913,6 +929,11 @@ function admin(){
 /* ---------- 渡したことを記す（帳面だけ） ---------- */
 // 注文で贈られた分は、届ける瓶のタグを選ぶだけで道につながる。手渡しの分だけ手で記す
 const okey=o=>(o.by||"")+"|"+(o.at||"");
+function aki(){
+  const F=[["hatake","畑"],["ooiDays","覆いの日数"],["tsumiDays","手摘みの日数"],["shikomi","今季の仕込み本数"],["otodoke","お届けの始まり"],["shimekiri","締切"],["limit","お一人の上限"],["price","一本のお代"],["chashi","茶師の一言"],["answer","茶師の答え"]];
+  const rows=Object.keys(S.teas).map(k=>{const c=TEA[k]||{};const miss=F.filter(([f])=>c[f]===undefined||c[f]===null||c[f]==="").map(([,n])=>n);return [k,miss]}).filter(([,m])=>m.length);
+  return `<section class="adm"><h3>まだ入っていない数</h3><p class="lead">空のものは画面に出ていません。中川さんに伺って、ファイルの上の TEA に入れます</p>
+    ${rows.length?`<div class="voices">${rows.map(([k,m])=>`<div class="voice"><p class="who">${esc((S.teas[k]||{}).name||k)}　${esc(k)}</p><p class="k">${esc(m.join("、"))}</p></div>`).join("")}</div>`:`<p class="lead">全部入っています</p>`}</section>`}
 function watashi(){
   const linked=new Set(S.passes.map(p=>p.order).filter(Boolean));
   const gifts=S.orders.filter(o=>o.kind==="gift"&&!linked.has(okey(o)));
