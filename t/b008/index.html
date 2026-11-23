@@ -1,4 +1,4 @@
-<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex"><style>:root{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style><script src="/ippon/nj-db.js"></script></head><body><title>NIJIRI 一本</title>
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex"><style>:root{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style><script src="/ippon/nj-db.js"></script></head><body><title>楢柴 一本</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -491,6 +491,19 @@ footer{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
 .opts span{font-size:14px}
 .field label{font-size:14px}
 .tap2{display:block;margin:10px auto 0;font-size:14px}
+
+/* 11/22 本人「この辺りもももこもこ使って欲しい」。上の部分に強弱を付けて膨らみを入れる
+   いちばん強い：瓶と茶銘の札（大きく盛り上がる）／中：数字の沈んだ丸／弱い：飲み方3つの小さな盛り上がり。物語の文は平らのまま */
+.fuda{background:linear-gradient(150deg,#F4F7F4 0%,#E4EAE5 100%);box-shadow:-14px -14px 30px var(--neu-hi),16px 18px 34px var(--neu-lo),inset 0 1px 0 rgba(255,255,255,.9);border-radius:26px;padding:22px 20px 22px}
+.fuda .uri{margin-top:18px;padding-top:16px;border-top:1px solid rgba(195,206,198,.7)}
+.nin{display:flex;align-items:center;gap:16px;margin-top:26px;font-size:16px;line-height:1.6}
+.nin-w{flex:none;display:grid;place-items:center;width:76px;height:76px;border-radius:50%;box-shadow:var(--down)}
+.nin-w b{font-family:var(--f-num);font-size:34px;color:var(--green);margin:0}
+.nomikata{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;border-top:0;margin-top:28px}
+.nomikata li{display:block;padding:14px 12px 14px;border-bottom:0;border-radius:18px;background:var(--neu);box-shadow:var(--up-s)}
+.nomikata .n{display:block;font-size:16px;line-height:1;margin-bottom:8px}
+.nomikata b{font-size:15px;line-height:1.4}
+.nomikata span{display:block;margin-top:4px;font-size:14px;line-height:1.5}
 </style>
 
 <div id="gate" aria-hidden="true" hidden>
@@ -676,7 +689,7 @@ function tap(id){
       <p class="kicker">${esc(WORDS.kicker)}</p>
       <p class="yurai">${rubied(WORDS.yurai)}</p>
       <p class="ima">${br(WORDS.ima)}</p>
-      <p class="nin">${esc(WORDS.ninMae)}<b>${nth}</b>${esc(WORDS.ninAto)}です。</p>
+      <p class="nin"><span class="nin-w"><b>${nth}</b></span><span>${esc(WORDS.ninMae)}<br>${nth}${esc(WORDS.ninAto)}です。</span></p>
     </div>
     ${(WORDS.nomikata||[]).length?`<ul class="nomikata">${WORDS.nomikata.map(([a,b],i)=>`<li><span class="n">${i+1}</span><div><b>${esc(a)}</b><span>${esc(b)}</span></div></li>`).join("")}</ul>`:""}
     <p class="toi">${br(WORDS.toi)}</p>
@@ -1021,7 +1034,7 @@ if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>drawTree(f
   const fail=()=>{};
   db.collection("teas").onSnapshot(once(s=>S.teas=map(s)),fail);
   db.collection("tags").onSnapshot(once(s=>S.tags=map(s)),fail);
-  db.collection("reviews").orderBy("at","desc").onSnapshot(once(s=>S.reviews=s.docs.map(d=>({...d.data(),_id:d.id}))),fail);
+  db.collection("reviews").orderBy("at","desc").onSnapshot(once(s=>S.reviews=s.docs.map(d=>({...d.data(),_id:d.id})).filter(r=>!/^test/.test(r.tag||"")||/^test/.test(route())||S.owner)),fail);
   db.collection("passes").orderBy("at").onSnapshot(once(s=>S.passes=s.docs.map(d=>d.data())),fail);
   db.doc("config/site").onSnapshot(once(s=>S.site=s.exists?s.data():{}),fail);
   if(S.owner)db.collection("orders").onSnapshot(once(s=>S.orders=(S.orderDocs=s.docs.map(d=>d.data()),s.docs).flatMap(d=>d.data().list||[]).sort((a,b)=>(a.at||"").localeCompare(b.at||""))),fail);
